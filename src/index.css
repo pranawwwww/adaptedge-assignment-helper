@@ -14,15 +14,18 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 224 64% 33%;
-    --primary-foreground: 210 40% 98%;
+    /* Pastel blue */
+    --primary: 210 100% 77%;
+    --primary-foreground: 210 40% 20%;
 
-    --secondary: 260 84% 74%;
+    /* Pastel purple */
+    --secondary: 280 84% 80%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
+    /* Pastel lavender */
     --accent: 260 84% 90%;
     --accent-foreground: 222.2 47.4% 11.2%;
 
@@ -33,12 +36,12 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 224 64% 33%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 224 64% 33%;
-    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary: 210 100% 77%;
+    --sidebar-primary-foreground: 0 0% 20%;
     --sidebar-accent: 240 4.8% 95.9%;
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
@@ -55,16 +58,19 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 217.2 91.2% 59.8%;
+    /* Pastel blue in dark mode */
+    --primary: 210 100% 65%;
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 260 84% 74%;
+    /* Pastel purple in dark mode */
+    --secondary: 280 84% 70%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 260 84% 30%;
+    /* Pastel lavender in dark mode */
+    --accent: 260 84% 50%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 30.6%;
@@ -76,7 +82,7 @@
     
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary: 210 100% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
@@ -95,22 +101,110 @@
   }
 }
 
+/* Gradient text styling */
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400;
 }
 
+/* Card styling */
 .feature-card {
-  @apply p-6 rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-300 bg-card;
+  @apply p-6 rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-300 bg-card hover:translate-y-[-5px];
 }
 
 .step-card {
-  @apply p-6 rounded-lg border border-border shadow-sm relative bg-card;
+  @apply p-6 rounded-lg border border-border shadow-sm relative bg-card transition-all duration-300;
 }
 
 .step-card-active {
-  @apply border-primary bg-accent/20;
+  @apply border-primary bg-accent/20 scale-105;
 }
 
 .step-number {
-  @apply absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold text-sm;
+  @apply absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm;
+}
+
+/* Animation classes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes progressAnimation {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-progress {
+  animation: progressAnimation 3s ease-in-out;
+}
+
+/* Staggered animations */
+.stagger-item:nth-child(1) { animation-delay: 0.1s; }
+.stagger-item:nth-child(2) { animation-delay: 0.2s; }
+.stagger-item:nth-child(3) { animation-delay: 0.3s; }
+.stagger-item:nth-child(4) { animation-delay: 0.4s; }
+.stagger-item:nth-child(5) { animation-delay: 0.5s; }
+.stagger-item:nth-child(6) { animation-delay: 0.6s; }
+
+/* Pastel background patterns */
+.pastel-pattern {
+  background-image: 
+    radial-gradient(rgba(255, 220, 255, 0.1) 8%, transparent 8%),
+    radial-gradient(rgba(255, 220, 255, 0.1) 8%, transparent 8%);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+
+/* Card hover effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Pastel gradient backgrounds */
+.pastel-gradient-blue {
+  background: linear-gradient(135deg, #D3E4FD 0%, #E5DEFF 100%);
+}
+
+.pastel-gradient-purple {
+  background: linear-gradient(135deg, #E5DEFF 0%, #FFDEE2 100%);
+}
+
+.pastel-gradient-peach {
+  background: linear-gradient(135deg, #FDE1D3 0%, #FEF7CD 100%);
 }

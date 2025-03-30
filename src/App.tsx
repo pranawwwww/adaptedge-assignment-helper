@@ -11,22 +11,36 @@ import SignUp from "./pages/SignUp";
 import Upload from "./pages/Upload";
 import Process from "./pages/Process";
 
-const queryClient = new QueryClient();
+// Create a QueryClient for data fetching (will be used with Supabase)
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      {/* Toast notifications */}
       <Toaster />
-      <Sonner />
+      <Sonner position="top-right" closeButton />
+      
+      {/* Main app routing */}
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/upload" element={<Upload />} />
-          <Route path="/process" element={<Process />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <div className="min-h-screen">
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/upload" element={<Upload />} />
+            <Route path="/process" element={<Process />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
