@@ -27,11 +27,18 @@ const App = () => (
     <TooltipProvider>
       {/* Toast notifications */}
       <Toaster />
-      <Sonner position="top-right" closeButton />
+      <Sonner 
+        position="top-right" 
+        closeButton 
+        className="glass" 
+        toastOptions={{
+          className: "glass border-purple-100 dark:border-purple-900/30 rounded-xl",
+        }}
+      />
       
       {/* Main app routing */}
       <BrowserRouter>
-        <div className="min-h-screen">
+        <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/upload" element={<Upload />} />
