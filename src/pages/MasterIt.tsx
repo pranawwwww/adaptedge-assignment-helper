@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import { ApiKeyWarning } from '@/components/ApiKeyWarning';
 import AnswersUpload from '@/components/AnswersUpload';
+import AIThinkingLoader from '@/components/AIThinkingLoader';
 import { 
   SidebarProvider, 
   Sidebar, 
@@ -25,6 +26,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { 
   fetchLevelContent, 
   submitAnswersAndGetNextLevel,
+  useLoadingState,
   type Flashcard,
   type AssessmentQuestion,
   type LevelData
@@ -116,6 +118,9 @@ const MasterIt = () => {
   const [previousQuestions, setPreviousQuestions] = useState<AssessmentQuestion[]>([]);
   const { toast } = useToast();
   const navigate = useNavigate();
+  
+  // Use our global loading state from useLoadingState
+  const { isLoading: isApiLoading, message: loadingMessage } = useLoadingState();
   
   // Add refs for scrolling
   const flashcardRefs = useRef<(HTMLDivElement | null)[]>([]);

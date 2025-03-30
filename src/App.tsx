@@ -11,6 +11,7 @@ import Process from "./pages/Process";
 import Flashcards from "./pages/Flashcards";
 import Assignment from "./pages/Assignment";
 import MasterIt from "./pages/MasterIt";
+import AILoadingOverlay from "./components/AILoadingOverlay";
 
 // Create a QueryClient for data fetching (will be used with Supabase)
 const queryClient = new QueryClient({
@@ -37,6 +38,9 @@ const App = () => (
             className: "glass border-purple-100 dark:border-purple-900/30 rounded-xl",
           }}
         />
+        
+        {/* Global AI Loading Overlay */}
+        <AILoadingOverlay />
         
         {/* Main app routing */}
         <BrowserRouter>

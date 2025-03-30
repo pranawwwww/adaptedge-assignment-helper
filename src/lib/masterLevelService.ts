@@ -41,6 +41,23 @@ export interface LLMContentResponse {
 
 // Import Gemini API service
 import { callGeminiAPI } from './geminiService';
+import { create } from 'zustand';
+
+// Create a store for the loading state to track API calls throughout the app
+interface LoadingState {
+  isLoading: boolean;
+  message: string;
+  setLoading: (isLoading: boolean, message?: string) => void;
+}
+
+export const useLoadingState = create<LoadingState>((set) => ({
+  isLoading: false,
+  message: "Processing your request...",
+  setLoading: (isLoading, message = "Processing your request...") => set({ 
+    isLoading,
+    message: isLoading ? message : ""
+  }),
+}));
 
 /**
  * Fetches level content using Gemini API
@@ -62,6 +79,10 @@ export const fetchLevelContent = async (
   console.log('Files provided:', files ? 'Yes' : 'No');
   console.log('Questionnaire provided:', questionnaire ? 'Yes' : 'No');
   console.log('API Key:', import.meta.env.VITE_GEMINI_API_KEY ? 'Present' : 'Missing');
+  
+  // Set loading state
+  const setLoading = useLoadingState.getState().setLoading;
+  setLoading(true, getLevelLoadingMessage(level));
   
   try {
     // Ensure we have files for the API request
@@ -123,6 +144,9 @@ export const fetchLevelContent = async (
   } catch (error) {
     console.error('Error fetching level content:', error);
     throw error;
+  } finally {
+    // Clear loading state
+    setLoading(false);
   }
 };
 
@@ -145,7 +169,40 @@ export const submitAnswersAndGetNextLevel = async (
     questions,
     answers
   };
+
+  // Set loading state with submission-specific message
+  const setLoading = useLoadingState.getState().setLoading;
+  setLoading(true, `Analyzing your answers and generating Level ${currentLevel + 1} content...`);
   
-  // Fetch the next level content
-  return fetchLevelContent(currentLevel + 1, files, questionnaire);
+  try {
+    // Fetch the next level content
+    return await fetchLevelContent(currentLevel + 1, files, questionnaire);
+  } finally {
+    // Clear loading state
+    setLoading(false);
+  }
 };
+
+/**
+ * Helper function to generate level-specific loading messages
+ */
+function getLevelLoadingMessage(level: number): string {
+  switch(level) {
+    case 0:
+      return "Analyzing your assignment materials...";
+    case 1:
+      return "Building your basic understanding content...";
+    case 2: 
+      return "Developing advanced concepts for your assignment...";
+    case 3:
+      return "Creating practical application examples...";
+    case 4:
+      return "Generating expert implementation guidance...";
+    case 5:
+      return "Preparing mastery level content...";
+    case 6:
+      return "Evaluating your submitted assignment...";
+    default:
+      return "Processing your request...";
+  }
+}

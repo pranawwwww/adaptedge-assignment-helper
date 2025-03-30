@@ -1,10 +1,10 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { BookOpen, ArrowRight, ArrowLeft, Lightbulb, BookText, CheckCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import AIThinkingLoader from "@/components/AIThinkingLoader";
 
 interface GuidedLearningProps {
   level: number;
@@ -16,6 +16,8 @@ interface GuidedLearningProps {
 const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLearningProps) => {
   const [activeStep, setActiveStep] = useState(1);
   const totalSteps = 4;
+  const [isLoading, setIsLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("Processing your request...");
   
   // In a real app, these would be generated based on the uploaded materials and level
   const steps = [
@@ -128,6 +130,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
               <p className="font-medium">Collect and organize your data</p>
               <p className="text-sm">Create a table of X and Y values from your data source.</p>
               
+
               {level <= 3 && (
                 <div className="bg-accent/20 p-3 rounded-lg mt-2 text-sm">
                   <h3 className="font-medium mb-1 flex items-center">
@@ -148,6 +151,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
               <p className="font-medium">Develop your mathematical model</p>
               <p className="text-sm">Create an equation that describes the relationship between X and Y.</p>
               
+
               {level <= 2 && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg mt-2 text-sm">
                   <p><span className="font-medium">Tip:</span> Remember the least squares method from your lecture notes in week 4 for finding the best-fit line.</p>
@@ -186,12 +190,14 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
               <p className="font-medium mb-2">Question 1:</p>
               <p className="mb-4">If a linear model is represented as Y = 2X + 5, what happens to Y when X increases by 3 units?</p>
               
+
               {level <= 3 && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg mb-4 text-sm">
                   <p><span className="font-medium">Hint:</span> Substitute the values into the equation and calculate the difference.</p>
                 </div>
               )}
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -200,6 +206,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
                 Y increases by 3 units
               </Button>
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -208,6 +215,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
                 Y increases by 5 units
               </Button>
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -217,6 +225,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
                 Y increases by 6 units
               </Button>
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -230,6 +239,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
               <p className="font-medium mb-2">Question 2:</p>
               <p className="mb-4">Which of the following best describes a logarithmic relationship between X and Y?</p>
               
+
               {level <= 4 && (
                 <div className="bg-accent/20 p-3 rounded-lg mb-4 text-sm">
                   <h3 className="font-medium mb-1 flex items-center">
@@ -240,6 +250,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
                 </div>
               )}
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -248,6 +259,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
                 Y grows at a constant rate as X increases
               </Button>
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -257,6 +269,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
                 Y grows quickly at first, then more slowly as X increases
               </Button>
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -265,6 +278,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
                 Y grows slowly at first, then more quickly as X increases
               </Button>
               
+
               <Button 
                 variant="outline" 
                 size="sm"
@@ -291,7 +305,30 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
   
   const handleNext = () => {
     if (activeStep < totalSteps) {
-      setActiveStep(activeStep + 1);
+      // Show the AI thinking loader with step-specific messages
+      setIsLoading(true);
+      const nextStep = activeStep + 1;
+      
+      // Set loading message based on the next step being loaded
+      switch(nextStep) {
+        case 2:
+          setLoadingMessage("Analyzing key concepts for your assignment...");
+          break;
+        case 3:
+          setLoadingMessage("Developing a step-by-step approach for your level...");
+          break;
+        case 4:
+          setLoadingMessage("Creating practice questions to verify your understanding...");
+          break;
+        default:
+          setLoadingMessage("Processing your request...");
+      }
+      
+      // Simulate AI processing time - in a real app, this would be an API call
+      setTimeout(() => {
+        setActiveStep(nextStep);
+        setIsLoading(false);
+      }, 1500);
     } else {
       onComplete();
     }
@@ -305,8 +342,30 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
     }
   };
 
+  // Modal effect when the loader is active
+  useEffect(() => {
+    if (isLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isLoading]);
+
   return (
     <div className="space-y-6">
+      {/* Full-page AI Thinking Loader overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-50 flex items-center justify-center">
+          <div className="max-w-lg w-full">
+            <AIThinkingLoader message={loadingMessage} />
+          </div>
+        </div>
+      )}
+      
       <Card>
         <CardHeader>
           <CardTitle>{assignmentTitle}</CardTitle>
@@ -420,6 +479,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
             <Button 
               variant="outline" 
               onClick={handleBack}
+              disabled={isLoading}
               className="flex items-center"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
@@ -427,6 +487,7 @@ const GuidedLearning = ({ level, assignmentTitle, onComplete, onBack }: GuidedLe
             </Button>
             <Button 
               onClick={handleNext}
+              disabled={isLoading}
               className="flex items-center"
             >
               {activeStep === totalSteps ? "Complete" : "Next Step"}
