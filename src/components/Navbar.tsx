@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { Menu, X, Brain, UserCircle2, Upload, Sparkles, BookOpen, FileCheck, Award } from 'lucide-react';
 
 const Navbar = () => {
@@ -61,10 +62,18 @@ const Navbar = () => {
                   AI Process
                 </Button>
               </Link>
+              {/* Theme toggle */}
+              <div className="ml-3">
+                <ThemeToggle />
+              </div>
             </div>
           </div>
           
-          <div className="md:hidden">
+          <div className="flex items-center md:hidden">
+            {/* Theme toggle for mobile */}
+            <div className="mr-2">
+              <ThemeToggle />
+            </div>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="glass inline-flex items-center justify-center p-2 rounded-full text-gray-700 dark:text-gray-400 hover:text-primary focus:outline-none"

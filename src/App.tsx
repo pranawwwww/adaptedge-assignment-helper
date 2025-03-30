@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Upload from "./pages/Upload";
@@ -23,36 +24,38 @@ const queryClient = new QueryClient({
 });
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      {/* Toast notifications */}
-      <Toaster />
-      <Sonner 
-        position="top-right" 
-        closeButton 
-        className="glass" 
-        toastOptions={{
-          className: "glass border-purple-100 dark:border-purple-900/30 rounded-xl",
-        }}
-      />
-      
-      {/* Main app routing */}
-      <BrowserRouter>
-        <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/upload" element={<Upload />} />
-            <Route path="/process" element={<Process />} />
-            <Route path="/flashcards" element={<Flashcards />} />
-            <Route path="/assignment" element={<Assignment />} />
-            <Route path="/master-it" element={<MasterIt />} />
-            <Route path="/master-it/:levelId" element={<MasterIt />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <ThemeProvider defaultTheme="system" storageKey="adaptedge-theme">
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        {/* Toast notifications */}
+        <Toaster />
+        <Sonner 
+          position="top-right" 
+          closeButton 
+          className="glass" 
+          toastOptions={{
+            className: "glass border-purple-100 dark:border-purple-900/30 rounded-xl",
+          }}
+        />
+        
+        {/* Main app routing */}
+        <BrowserRouter>
+          <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950">
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/process" element={<Process />} />
+              <Route path="/flashcards" element={<Flashcards />} />
+              <Route path="/assignment" element={<Assignment />} />
+              <Route path="/master-it" element={<MasterIt />} />
+              <Route path="/master-it/:levelId" element={<MasterIt />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
 );
 
 export default App;
