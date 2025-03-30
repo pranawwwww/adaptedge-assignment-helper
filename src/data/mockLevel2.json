@@ -1,0 +1,60 @@
+{
+    "status": "LEVEL_2_ADVANCED_UNDERSTANDING",
+    
+    "feedback_md": "# Feedback on Level 1 Assessment\n\n## Question 1: ⚠️ Partially Correct\n**Your Answer:** To save CPU credits  \n**Correct Answer:** To minimize AWS billing charges\n\n**Feedback:** While saving CPU credits is a side benefit on T2/T3 instances, the primary goal in this assignment context is to **minimize AWS billing charges**, especially for the app-tier, which can scale up to 15 instances. AWS charges by the second (after the first minute) for EC2 usage, so stopping unused instances directly controls cost.\n\n---\n\n## Question 2: ⚠️ Partially Correct\n**Your Answer:**\n- Install PyTorch and other dependencies\n- Copy model weights and code to the instance  \n**Correct Answers:**\n- Install PyTorch and other dependencies\n- Copy model weights and code to the instance\n- Stop the EC2 instance before creating the AMI\n\n**Feedback:** You got the setup steps right, but **forgot to stop the instance** before creating the AMI. Stopping ensures the file system state is safely flushed, and AWS recommends it to prevent inconsistencies. It's not mandatory technically, but it's best practice.\n\n---\n\n## Question 3: ✅ Correct\n**Your Answer:** AMIs are snapshots that initialize new EC2 instances  \n**Correct Answer:** AMIs are snapshots that initialize new EC2 instances\n\n**Feedback:** Excellent! You grasped the essential role of AMIs in reproducibility and scaling. This understanding will help you not only in this project but also when working with load-balanced services and blue-green deployments in real-world systems.",
+    
+    "main_content_md": "# Key Concept 1: Advanced Applications\n\n## Autoscaling with EC2 and AMIs in Practice\nBeyond static infrastructure, AMIs enable **infrastructure as code** and rapid auto-scalability. For example, when traffic spikes, you can launch many EC2 instances from an AMI in parallel, each instantly ready for prediction, web hosting, or batch processing.\n\n### Best Practices\n- **Golden AMIs**: Use hardened, patched, and tested AMIs for production use.\n- **Versioning**: Tag AMIs with version numbers so you can roll back in case of bugs.\n- **Automation**: Tools like Packer or EC2 Image Builder automate AMI creation.\n\n### Edge Cases\n- **Post-launch setup**: Avoid putting sensitive tokens in AMIs. Use EC2 user data or AWS Parameter Store to inject configs at launch.\n- **Stale dependencies**: If your AMI includes Python packages, be sure to recreate it regularly to avoid outdated libraries or security issues.\n\n### Scaling Considerations\n- **Boot Time**: Even with AMIs, instance boot time (30–90s) may affect latency.\n- **Zombies**: Ensure your autoscaler doesn’t leave idle instances running.\n- **Throttling**: AWS has limits on number of instances you can launch concurrently per region. Account for this in workload simulation.\n\n## Real-World Application Example\nIn high-throughput inference pipelines (like video analytics or fraud detection), pre-baked AMIs with CUDA and ML models allow for stateless, reproducible deployments using EC2 Spot Instances for cost efficiency.\n\n## Key Takeaway\n**A well-built AMI is not just a snapshot—it’s a blueprint for reproducibility, cost control, and scalability.**",
+    
+    "flashcards": [
+    {
+    "heading": "Key Concept 1 - Edge Cases",
+    "flashcard_content": "Creating an AMI from a running instance can lead to data inconsistency. Always stop the instance before AMI creation to ensure file systems are stable."
+    },
+    {
+    "heading": "Key Concept 1 - Advanced Techniques",
+    "flashcard_content": "Use EC2 user-data scripts or Systems Manager to dynamically inject environment-specific secrets or configurations into EC2 instances created from an AMI."
+    }
+    ],
+    
+    "assessment_questions": [
+    {
+    "id": "q1_concept1_level2",
+    "concept_focus": "AWS EC2 and AMI",
+    "type": "MCQ",
+    "question_text": "You are running an autoscaling ML inference service using EC2 instances launched from a custom AMI. What is the biggest benefit of using this AMI in autoscaling?",
+    "options": [
+    "It allows resizing of EBS volumes automatically",
+    "It eliminates the need for IAM roles",
+    "It ensures all launched instances are consistently configured",
+    "It enables usage of GPU instances"
+    ],
+    "correct_answers": ["It ensures all launched instances are consistently configured"]
+    },
+    {
+    "id": "q2_concept1_level2",
+    "concept_focus": "AWS EC2 and AMI",
+    "type": "MAQ",
+    "question_text": "You are experiencing long startup times for your app-tier instances. Which of the following strategies will help mitigate the delay? Select all that apply.",
+    "options": [
+    "Install dependencies during instance boot time",
+    "Use a pre-baked AMI with all dependencies",
+    "Use EC2 user-data scripts for lightweight customization",
+    "Create AMIs from stopped, clean instances"
+    ],
+    "correct_answers": ["Use a pre-baked AMI with all dependencies", "Use EC2 user-data scripts for lightweight customization", "Create AMIs from stopped, clean instances"]
+    },
+    {
+    "id": "q3_concept1_level2",
+    "concept_focus": "AWS EC2 and AMI",
+    "type": "MCQ",
+    "question_text": "What is a potential drawback of using a stale AMI for launching EC2 instances in your autoscaler?",
+    "options": [
+    "Increased AWS billing",
+    "Security vulnerabilities due to outdated packages",
+    "Faster instance boot time",
+    "Instances not showing up on AWS Console"
+    ],
+    "correct_answers": ["Security vulnerabilities due to outdated packages"]
+    }
+    ]
+    }

@@ -1,0 +1,60 @@
+{
+    "status": "LEVEL_1_FEEDBACK_AND_PROGRESSION",
+    
+    "feedback_md": "# Feedback on Level 0 Assessment\n\n## Question 1: ✅ Correct\n**Your Answer:** To quickly launch pre-configured app tier instances  \n**Explanation:** This is correct. The main advantage of creating a custom AMI is that it allows you to reuse a configured environment (including dependencies and model files), enabling fast bootstrapping of new EC2 instances.\n\n## Question 2: ⚠️ Partially Correct\n**Your Answer:** The web-tier instance must be always running  \n**Correct Answers:**\n- The web-tier instance must be always running\n- App-tier instances can be stopped when idle\n- App-tier instances process one request at a time\n\n**Feedback:** You correctly identified that the web-tier must always be running. However, you missed the other valid behaviors of the app-tier instances, such as processing one request at a time and stopping when idle. These are critical to implementing the autoscaling policy described in the assignment.\n\n## Question 3: ❌ Incorrect\n**Your Answer:** app-instance-<index>  \n**Correct Answer:** app-tier-instance-<instance#>  \n\n**Feedback:** The naming convention for app-tier EC2 instances is explicitly defined in the assignment. Following this format is essential for both grading and maintaining AWS resource organization. You may have confused this with other common naming patterns, but attention to detail is key in cloud assignments.\n",
+    
+    "main_content_md": "# Key Concept 1: Deeper Exploration - AWS EC2 and AMIs\n\n## What is EC2?\nAmazon EC2 (Elastic Compute Cloud) provides resizable compute capacity in the AWS cloud. You can launch instances with different OS types and hardware configurations depending on your workload.\n\n## What is an AMI?\nAn Amazon Machine Image (AMI) is a pre-configured template used to launch EC2 instances. It includes:\n- OS configuration\n- Installed software packages\n- Application code\n- Data/configuration files (like model weights)\n\n## Why Use a Custom AMI?\nIn this project, you're required to prepare an EC2 instance with all necessary dependencies (like PyTorch and your ML model), and then create an AMI from it. This AMI can then be used to quickly spin up app-tier EC2 instances that are ready to serve requests with minimal startup delay.\n\nThis enables your autoscaling controller to:\n- Launch instances that are ready-to-go\n- Avoid time-consuming setup tasks every time a new instance is needed\n- Meet performance benchmarks in the autograder (e.g., < 1.2s avg latency)\n\n## Real-World Use\nCustom AMIs are used in industry to deploy consistent environments for web servers, batch processing, or ML inference across fleets of EC2 instances in microservices and auto-scaling architectures.",
+    
+    "flashcards": [
+    {
+    "heading": "Key Concept 1 - Advanced Aspect",
+    "flashcard_content": "Custom AMIs reduce startup latency in autoscaling by eliminating redundant setup steps like installing dependencies or copying model files each time a new instance is launched."
+    },
+    {
+    "heading": "Key Concept 1 - Application",
+    "flashcard_content": "Use AMIs to pre-configure EC2 instances in high-throughput systems, allowing quick replication across regions or for failover strategies in production systems."
+    }
+    ],
+    
+    "assessment_questions": [
+    {
+    "id": "q1_concept1_level1",
+    "concept_focus": "AWS EC2 and AMI",
+    "type": "MCQ",
+    "question_text": "Why is it important to stop app-tier EC2 instances after processing a request in this project?",
+    "options": [
+    "To save CPU credits",
+    "To minimize AWS billing charges",
+    "To reset the instance memory",
+    "To comply with IAM policy"
+    ],
+    "correct_answers": ["To minimize AWS billing charges"]
+    },
+    {
+    "id": "q2_concept1_level1",
+    "concept_focus": "AWS EC2 and AMI",
+    "type": "MAQ",
+    "question_text": "Which steps are necessary to create a usable AMI for app-tier scaling? Select all that apply.",
+    "options": [
+    "Install PyTorch and other dependencies",
+    "Copy model weights and code to the instance",
+    "Run 'aws autoscaling start-policy'",
+    "Stop the EC2 instance before creating the AMI"
+    ],
+    "correct_answers": ["Install PyTorch and other dependencies", "Copy model weights and code to the instance", "Stop the EC2 instance before creating the AMI"]
+    },
+    {
+    "id": "q3_concept1_level1",
+    "concept_focus": "AWS EC2 and AMI",
+    "type": "MCQ",
+    "question_text": "Which of the following best describes the relationship between EC2 instances and AMIs in autoscaling?",
+    "options": [
+    "Instances replace AMIs once launched",
+    "AMIs are snapshots that initialize new EC2 instances",
+    "AMIs can only be used with Windows instances",
+    "Each AMI is automatically linked to a single instance"
+    ],
+    "correct_answers": ["AMIs are snapshots that initialize new EC2 instances"]
+    }
+    ]
+    }

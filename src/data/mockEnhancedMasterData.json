@@ -1,0 +1,161 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "title": "Level 1: Fundamentals",
+      "content": "# Level 1: Fundamentals\n\nWelcome to the first level of mastery! In this level, we'll cover the basic concepts and foundations of the subject.",
+      "contentBlocks": [
+        {
+          "id": "intro-1",
+          "type": "text",
+          "content": "# Level 1: Fundamentals\n\nWelcome to the first level of mastery! In this level, we'll cover the basic concepts and foundations of the subject."
+        },
+        {
+          "id": "concepts-1",
+          "type": "text",
+          "content": "## Key Concepts\n\n- Understanding the core principles\n- Building a mental model of the subject\n- Recognizing patterns and structures\n\nTake your time to go through the materials carefully, as these fundamentals will be essential for your progress."
+        },
+        {
+          "id": "note-1",
+          "type": "note",
+          "content": "Understanding these fundamentals thoroughly will make all subsequent levels much easier to grasp. Don't rush through this section!"
+        },
+        {
+          "id": "code-example-1",
+          "type": "code",
+          "content": "// Example of a basic concept implementation\nfunction demonstrateConcept(input) {\n  const result = processInput(input);\n  return formatOutput(result);\n}\n\n// This pattern will be used throughout the course",
+          "metadata": {
+            "language": "javascript"
+          }
+        },
+        {
+          "id": "example-1",
+          "type": "example",
+          "content": "When applying these concepts, consider how they relate to real-world scenarios. For instance, the concept of abstraction helps us hide complexity and focus on essential features."
+        },
+        {
+          "id": "resource-1",
+          "type": "resource",
+          "content": "Check out this excellent guide for more details on fundamentals",
+          "metadata": {
+            "title": "Fundamentals Deep Dive",
+            "url": "https://example.com/fundamentals"
+          }
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "fc1-1",
+          "question": "What is the primary purpose of this subject?",
+          "answer": "To provide a framework for understanding complex systems and solving related problems."
+        },
+        {
+          "id": "fc1-2",
+          "question": "Name three core principles of the subject.",
+          "answer": "Abstraction, composition, and recursion."
+        },
+        {
+          "id": "fc1-3",
+          "question": "How do we measure success in this field?",
+          "answer": "Through efficiency, correctness, and clarity of solutions."
+        }
+      ],
+      "questions": [
+        {
+          "id": "q1-1",
+          "question": "Which of these is NOT a core principle we discussed?",
+          "options": ["Abstraction", "Inheritance", "Recursion", "Composition"],
+          "correctAnswer": "Inheritance"
+        },
+        {
+          "id": "q1-2",
+          "question": "When building mental models, what should you focus on first?",
+          "options": ["Edge cases", "Common patterns", "Exceptions", "Implementation details"],
+          "correctAnswer": "Common patterns"
+        },
+        {
+          "id": "q1-3",
+          "question": "Which approach is most effective when learning fundamentals?",
+          "options": ["Memorization of facts", "Understanding core concepts", "Practicing advanced techniques", "Skimming through material"],
+          "correctAnswer": "Understanding core concepts"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Level 2: Application",
+      "content": "# Level 2: Application\n\nNow that you understand the fundamentals, it's time to apply them to real problems.",
+      "contentBlocks": [
+        {
+          "id": "intro-2",
+          "type": "text",
+          "content": "# Level 2: Application\n\nNow that you understand the fundamentals, it's time to apply them to real problems. In this level, we'll focus on practical applications and exercises."
+        },
+        {
+          "id": "focus-2",
+          "type": "text",
+          "content": "## Key Focus Areas\n\n- Translating theory into practice\n- Solving basic problems\n- Identifying which concepts apply to different scenarios\n\nApplication is where learning becomes tangible. Let's put your knowledge to work!"
+        },
+        {
+          "id": "warning-2",
+          "type": "warning",
+          "content": "Remember to start with simple problems before tackling more complex ones. Many learners try to jump ahead too quickly and miss important patterns."
+        },
+        {
+          "id": "code-example-2",
+          "type": "code",
+          "content": "// Applying our concepts to a real problem\nfunction solveRealProblem(input) {\n  // Break down the problem\n  const parts = decompose(input);\n  \n  // Apply the appropriate concept to each part\n  const results = parts.map(part => applyConcept(part));\n  \n  // Combine the results\n  return integrate(results);\n}",
+          "metadata": {
+            "language": "javascript"
+          }
+        },
+        {
+          "id": "interactive-2",
+          "type": "interactive",
+          "content": "Try working through this problem step-by-step, identifying which concepts you need to apply at each stage.",
+          "metadata": {
+            "interactionType": "exercise",
+            "steps": ["Identify the problem type", "Select relevant concepts", "Apply concepts", "Verify solution"]
+          }
+        }
+      ],
+      "flashcards": [
+        {
+          "id": "fc2-1",
+          "question": "What's the difference between theory and application?",
+          "answer": "Theory focuses on understanding concepts, while application focuses on using those concepts to solve problems."
+        },
+        {
+          "id": "fc2-2",
+          "question": "Name two common challenges when applying concepts to new problems.",
+          "answer": "Recognizing which concepts are relevant and adapting theoretical knowledge to practical constraints."
+        },
+        {
+          "id": "fc2-3",
+          "question": "Why is practice essential in the application phase?",
+          "answer": "Practice bridges the gap between understanding and mastery, building neural pathways that make application more intuitive."
+        }
+      ],
+      "questions": [
+        {
+          "id": "q2-1",
+          "question": "When faced with a new problem, what should be your first step?",
+          "options": ["Start coding immediately", "Break the problem down", "Look for similar solved problems", "Ask for help"],
+          "correctAnswer": "Break the problem down"
+        },
+        {
+          "id": "q2-2",
+          "question": "Which technique helps most with applying concepts to new domains?",
+          "options": ["Analogical thinking", "Memorization", "Trial and error", "Perfectionism"],
+          "correctAnswer": "Analogical thinking"
+        },
+        {
+          "id": "q2-3",
+          "question": "What distinguishes novice application from expert application?",
+          "options": ["Speed only", "Amount of effort required", "Pattern recognition", "Luck"],
+          "correctAnswer": "Pattern recognition"
+        }
+      ]
+    }
+  ]
+}

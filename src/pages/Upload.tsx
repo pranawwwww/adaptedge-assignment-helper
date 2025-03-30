@@ -1,11 +1,11 @@
-
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Upload as UploadIcon, FileText, BookOpen, ArrowRight } from "lucide-react";
+import { Upload as UploadIcon, FileText, BookOpen, ArrowRight, Loader2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import Navbar from "@/components/Navbar";
+import { processFilesForUpload } from "@/lib/fileUploadService";
 
 const Upload = () => {
   const { toast } = useToast();
@@ -16,21 +16,70 @@ const Upload = () => {
   const [isUploading, setIsUploading] = useState(false);
   
   // Get the help type from location state if available
-  const helpType = location.state?.helpType || null;
+  const helpType = location.state?.helpType || "master-it";
+
+  // Configuration from environment variables
+  const MAX_FILE_SIZE = import.meta.env.VITE_MAX_UPLOAD_SIZE_MB 
+    ? parseInt(import.meta.env.VITE_MAX_UPLOAD_SIZE_MB) * 1024 * 1024 
+    : 10 * 1024 * 1024; // Default to 10MB if not specified
+  
+  const ALLOWED_FILE_TYPES = import.meta.env.VITE_ALLOWED_FILE_TYPES || ".pdf,.doc,.docx,.txt";
+
+  // DEBUG: Log environment variables to make sure they're loaded
+  console.log("Environment variables:", {
+    API_BASE_URL: import.meta.env.VITE_API_BASE_URL,
+    USE_MOCK_DATA: import.meta.env.VITE_USE_MOCK_DATA,
+    MAX_UPLOAD_SIZE_MB: import.meta.env.VITE_MAX_UPLOAD_SIZE_MB,
+    ALLOWED_FILE_TYPES: import.meta.env.VITE_ALLOWED_FILE_TYPES
+  });
 
   const handleAssignmentUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setAssignmentFile(e.target.files[0]);
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    const file = e.target.files[0];
+    
+    // Check file size
+    if (file.size > MAX_FILE_SIZE) {
+      toast({
+        title: "File too large",
+        description: `Maximum file size is ${MAX_FILE_SIZE / (1024 * 1024)}MB`,
+        variant: "destructive",
+      });
+      return;
     }
+    
+    setAssignmentFile(file);
   };
 
   const handleStudyMaterialsUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setStudyMaterials(Array.from(e.target.files));
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    // Check each file size
+    const validFiles: File[] = [];
+    const invalidFiles: string[] = [];
+    
+    Array.from(e.target.files).forEach(file => {
+      if (file.size > MAX_FILE_SIZE) {
+        invalidFiles.push(file.name);
+      } else {
+        validFiles.push(file);
+      }
+    });
+    
+    if (invalidFiles.length > 0) {
+      toast({
+        title: "Some files are too large",
+        description: `The following files exceed the ${MAX_FILE_SIZE / (1024 * 1024)}MB limit: ${invalidFiles.join(', ')}`,
+        variant: "destructive",
+      });
+    }
+    
+    if (validFiles.length > 0) {
+      setStudyMaterials(prev => [...prev, ...validFiles]);
     }
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (!assignmentFile) {
       toast({
         title: "Assignment required",
@@ -42,22 +91,47 @@ const Upload = () => {
 
     setIsUploading(true);
     
-    // Simulate upload process
-    setTimeout(() => {
-      setIsUploading(false);
+    try {
+      // Process files for API
+      const allFiles = [assignmentFile, ...studyMaterials];
+      console.log("Files to process:", allFiles.map(f => ({ name: f.name, size: f.size, type: f.type })));
+      
+      const processedFiles = await processFilesForUpload(allFiles);
+      console.log("Processed files:", processedFiles);
+      
+      // Store processed files in session storage for later use
+      sessionStorage.setItem('uploadedFiles', JSON.stringify(processedFiles));
+      
+      // Verify the data was saved to session storage
+      const savedFiles = sessionStorage.getItem('uploadedFiles');
+      console.log("Saved to session storage:", savedFiles ? "yes" : "no", 
+                  savedFiles ? JSON.parse(savedFiles).length : 0, "files");
       
       toast({
         title: "Upload successful!",
         description: "Your materials have been processed successfully.",
       });
       
-      // Navigate to process or directly to flashcards based on whether help type is already selected
-      if (helpType) {
+      // If this is the Master It learning path, go directly to level 0
+      if (helpType === "master-it") {
+        navigate("/master-it/0");
+      }
+      // Otherwise, navigate based on help type
+      else if (helpType) {
         navigate("/flashcards", { state: { helpType } });
       } else {
         navigate("/process");
       }
-    }, 1500);
+    } catch (error) {
+      console.error("Error processing files:", error);
+      toast({
+        title: "Upload failed",
+        description: "There was an error processing your files. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -118,7 +192,7 @@ const Upload = () => {
                       id="assignment-upload"
                       type="file"
                       className="hidden"
-                      accept=".pdf,.doc,.docx,.txt"
+                      accept={ALLOWED_FILE_TYPES}
                       onChange={handleAssignmentUpload}
                     />
                     <Button
@@ -186,7 +260,7 @@ const Upload = () => {
                       id="materials-upload"
                       type="file"
                       className="hidden"
-                      accept=".pdf,.doc,.docx,.txt"
+                      accept={ALLOWED_FILE_TYPES}
                       multiple
                       onChange={handleStudyMaterialsUpload}
                     />
@@ -213,7 +287,7 @@ const Upload = () => {
             >
               {isUploading ? (
                 <>
-                  <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
                   Processing...
                 </>
               ) : (

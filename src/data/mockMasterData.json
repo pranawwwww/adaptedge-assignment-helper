@@ -1,0 +1,256 @@
+{
+    "levels": [
+      {
+        "id": 1,
+        "title": "Level 1: Fundamentals",
+        "content": "# Level 1: Fundamentals\n\nWelcome to the first level of mastery! In this level, we'll cover the basic concepts and foundations of the subject.\n\n## Key Concepts\n\n- Understanding the core principles\n- Building a mental model of the subject\n- Recognizing patterns and structures\n\nTake your time to go through the materials carefully, as these fundamentals will be essential for your progress.",
+        "flashcards": [
+          {
+            "id": "fc1-1",
+            "question": "What is the primary purpose of this subject?",
+            "answer": "To provide a framework for understanding complex systems and solving related problems."
+          },
+          {
+            "id": "fc1-2",
+            "question": "Name three core principles of the subject.",
+            "answer": "Abstraction, composition, and recursion."
+          },
+          {
+            "id": "fc1-3",
+            "question": "How do we measure success in this field?",
+            "answer": "Through efficiency, correctness, and clarity of solutions."
+          }
+        ],
+        "questions": [
+          {
+            "id": "q1-1",
+            "question": "Which of these is NOT a core principle we discussed?",
+            "options": ["Abstraction", "Inheritance", "Recursion", "Composition"],
+            "correctAnswer": "Inheritance"
+          },
+          {
+            "id": "q1-2",
+            "question": "When building mental models, what should you focus on first?",
+            "options": ["Edge cases", "Common patterns", "Exceptions", "Implementation details"],
+            "correctAnswer": "Common patterns"
+          },
+          {
+            "id": "q1-3",
+            "question": "Which approach is most effective when learning fundamentals?",
+            "options": ["Memorization of facts", "Understanding core concepts", "Practicing advanced techniques", "Skimming through material"],
+            "correctAnswer": "Understanding core concepts"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Level 2: Application",
+        "content": "# Level 2: Application\n\nNow that you understand the fundamentals, it's time to apply them to real problems. In this level, we'll focus on practical applications and exercises.\n\n## Key Focus Areas\n\n- Translating theory into practice\n- Solving basic problems\n- Identifying which concepts apply to different scenarios\n\nApplication is where learning becomes tangible. Let's put your knowledge to work!",
+        "flashcards": [
+          {
+            "id": "fc2-1",
+            "question": "What's the difference between theory and application?",
+            "answer": "Theory focuses on understanding concepts, while application focuses on using those concepts to solve problems."
+          },
+          {
+            "id": "fc2-2",
+            "question": "Name two common challenges when applying concepts to new problems.",
+            "answer": "Recognizing which concepts are relevant and adapting theoretical knowledge to practical constraints."
+          },
+          {
+            "id": "fc2-3",
+            "question": "Why is practice essential in the application phase?",
+            "answer": "Practice bridges the gap between understanding and mastery, building neural pathways that make application more intuitive."
+          }
+        ],
+        "questions": [
+          {
+            "id": "q2-1",
+            "question": "When faced with a new problem, what should be your first step?",
+            "options": ["Start coding immediately", "Break the problem down", "Look for similar solved problems", "Ask for help"],
+            "correctAnswer": "Break the problem down"
+          },
+          {
+            "id": "q2-2",
+            "question": "Which technique helps most with applying concepts to new domains?",
+            "options": ["Analogical thinking", "Memorization", "Trial and error", "Perfectionism"],
+            "correctAnswer": "Analogical thinking"
+          },
+          {
+            "id": "q2-3",
+            "question": "What distinguishes novice application from expert application?",
+            "options": ["Speed only", "Amount of effort required", "Pattern recognition", "Luck"],
+            "correctAnswer": "Pattern recognition"
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Level 3: Analysis",
+        "content": "# Level 3: Analysis\n\nAt this level, we move beyond application to deeper analysis. You'll learn to dissect problems, compare approaches, and evaluate solutions.\n\n## Focus Areas\n\n- Breaking complex problems into manageable components\n- Comparing multiple solution strategies\n- Evaluating trade-offs and optimizations\n\nAnalysis is where critical thinking becomes essential to your mastery journey.",
+        "flashcards": [
+          {
+            "id": "fc3-1",
+            "question": "What is the purpose of analyzing multiple solutions to the same problem?",
+            "answer": "To understand trade-offs between approaches and select the most appropriate solution based on specific requirements."
+          },
+          {
+            "id": "fc3-2",
+            "question": "How does decomposition help in analysis?",
+            "answer": "It breaks down complex problems into simpler, manageable parts that can be solved independently."
+          },
+          {
+            "id": "fc3-3",
+            "question": "What's the difference between optimization and refinement?",
+            "answer": "Optimization focuses on improving specific metrics like speed or efficiency, while refinement addresses quality, readability, and maintainability."
+          }
+        ],
+        "questions": [
+          {
+            "id": "q3-1",
+            "question": "Which analytical approach considers both time and space efficiency?",
+            "options": ["Unit testing", "Complexity analysis", "Code review", "Debugging"],
+            "correctAnswer": "Complexity analysis"
+          },
+          {
+            "id": "q3-2",
+            "question": "When comparing two valid solutions, which factor might be LEAST relevant?",
+            "options": ["Performance", "Maintainability", "The developer's preferred style", "Scalability"],
+            "correctAnswer": "The developer's preferred style"
+          },
+          {
+            "id": "q3-3",
+            "question": "What is a key indicator that further analysis is needed?",
+            "options": ["The solution works correctly", "Edge cases aren't handled", "The code is commented", "Multiple people reviewed it"],
+            "correctAnswer": "Edge cases aren't handled"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Level 4: Synthesis",
+        "content": "# Level 4: Synthesis\n\nAt this advanced level, you'll learn to combine concepts and create novel solutions. Synthesis is about integration and creation.\n\n## Key Focus Areas\n\n- Combining multiple concepts to solve complex problems\n- Creating new approaches from existing knowledge\n- Building comprehensive solutions to multi-faceted problems\n\nThis is where expertise begins to form, as disparate knowledge becomes an interconnected whole.",
+        "flashcards": [
+          {
+            "id": "fc4-1",
+            "question": "What is synthesis in the context of learning?",
+            "answer": "Synthesis is the ability to combine different concepts, methods, or ideas to create new solutions or deeper understanding."
+          },
+          {
+            "id": "fc4-2",
+            "question": "How does synthesis differ from analysis?",
+            "answer": "Analysis breaks things down into components, while synthesis brings elements together to create something new."
+          },
+          {
+            "id": "fc4-3",
+            "question": "Why is creativity an important aspect of synthesis?",
+            "answer": "Creativity allows for novel combinations and approaches that may not be obvious from conventional thinking."
+          }
+        ],
+        "questions": [
+          {
+            "id": "q4-1",
+            "question": "Which of these activities best demonstrates synthesis?",
+            "options": ["Debugging code", "Creating a new algorithm", "Following a tutorial", "Memorizing syntax"],
+            "correctAnswer": "Creating a new algorithm"
+          },
+          {
+            "id": "q4-2",
+            "question": "What skill is MOST important for effective synthesis?",
+            "options": ["Pattern recognition", "Memorization", "Following instructions", "Speed coding"],
+            "correctAnswer": "Pattern recognition"
+          },
+          {
+            "id": "q4-3",
+            "question": "When synthesizing a solution, what should be prioritized?",
+            "options": ["Using as many concepts as possible", "Aligning with project requirements", "Impressing others with complexity", "Following conventional approaches only"],
+            "correctAnswer": "Aligning with project requirements"
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Level 5: Evaluation",
+        "content": "# Level 5: Evaluation\n\nThe highest level of mastery involves critical evaluation and judgment. You'll learn to assess, critique, and improve at a systemic level.\n\n## Key Focus Areas\n\n- Developing evaluation frameworks and criteria\n- Making informed judgments about complex solutions\n- Providing constructive feedback and improvements\n\nAt this level, you become not just a practitioner but an authority capable of guiding others.",
+        "flashcards": [
+          {
+            "id": "fc5-1",
+            "question": "What makes evaluation different from other levels of mastery?",
+            "answer": "Evaluation requires judgment based on deep understanding, allowing for critique and improvement rather than just application or synthesis."
+          },
+          {
+            "id": "fc5-2",
+            "question": "Why is establishing criteria important for evaluation?",
+            "answer": "Criteria provide an objective framework for assessment, reducing bias and ensuring consistent evaluation across different contexts."
+          },
+          {
+            "id": "fc5-3",
+            "question": "How does evaluation contribute to the field as a whole?",
+            "answer": "Evaluation drives improvement and innovation by identifying weaknesses, validating strengths, and suggesting new directions for development."
+          }
+        ],
+        "questions": [
+          {
+            "id": "q5-1",
+            "question": "What is the most important quality of effective evaluation?",
+            "options": ["Being comprehensive", "Being objective", "Being critical", "Being quick"],
+            "correctAnswer": "Being objective"
+          },
+          {
+            "id": "q5-2",
+            "question": "When evaluating others' work, what approach is most constructive?",
+            "options": ["Finding all possible flaws", "Balancing critique with appreciation", "Comparing to your own work", "Focusing only on positives"],
+            "correctAnswer": "Balancing critique with appreciation"
+          },
+          {
+            "id": "q5-3",
+            "question": "What distinguishes novice evaluation from expert evaluation?",
+            "options": ["Length of feedback", "Focus on surface vs. deeper patterns", "Number of issues identified", "Use of technical jargon"],
+            "correctAnswer": "Focus on surface vs. deeper patterns"
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Review",
+        "content": "# Final Review\n\nCongratulations on reaching the review stage! This is your opportunity to consolidate everything you've learned across all five levels.\n\n## Key Areas to Review\n\n- Fundamentals and their applications\n- Analytical approaches and methodologies\n- Synthesis techniques and creative problem-solving\n- Evaluation frameworks and critical thinking\n\nUse this review to identify any gaps in your understanding and to strengthen your mastery of the subject.",
+        "flashcards": [
+          {
+            "id": "fc6-1",
+            "question": "What are the five levels of mastery we've covered?",
+            "answer": "Fundamentals, Application, Analysis, Synthesis, and Evaluation."
+          },
+          {
+            "id": "fc6-2",
+            "question": "How do the levels build upon each other?",
+            "answer": "Each level requires mastery of previous levels: fundamentals provide knowledge, application puts it to use, analysis deepens understanding, synthesis creates new solutions, and evaluation judges quality and effectiveness."
+          },
+          {
+            "id": "fc6-3",
+            "question": "What is the ultimate goal of mastery?",
+            "answer": "To develop deep understanding and skill that allows for innovation, teaching others, and advancing the field."
+          }
+        ],
+        "questions": [
+          {
+            "id": "q6-1",
+            "question": "Which level focuses on applying theoretical knowledge to practical problems?",
+            "options": ["Fundamentals", "Application", "Analysis", "Synthesis"],
+            "correctAnswer": "Application"
+          },
+          {
+            "id": "q6-2",
+            "question": "What skill becomes most critical at the evaluation level?",
+            "options": ["Memorization", "Creativity", "Judgment", "Speed"],
+            "correctAnswer": "Judgment"
+          },
+          {
+            "id": "q6-3",
+            "question": "How should you approach ongoing mastery after completing these levels?",
+            "options": ["Consider yourself finished learning", "Focus only on your weakest areas", "Maintain regular practice across all levels", "Move to an entirely different subject"],
+            "correctAnswer": "Maintain regular practice across all levels"
+          }
+        ]
+      }
+    ]
+  }

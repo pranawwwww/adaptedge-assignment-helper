@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +9,7 @@ import Upload from "./pages/Upload";
 import Process from "./pages/Process";
 import Flashcards from "./pages/Flashcards";
 import Assignment from "./pages/Assignment";
+import MasterIt from "./pages/MasterIt";
 
 // Create a QueryClient for data fetching (will be used with Supabase)
 const queryClient = new QueryClient({
@@ -45,6 +45,8 @@ const App = () => (
             <Route path="/process" element={<Process />} />
             <Route path="/flashcards" element={<Flashcards />} />
             <Route path="/assignment" element={<Assignment />} />
+            <Route path="/master-it" element={<MasterIt />} />
+            <Route path="/master-it/:levelId" element={<MasterIt />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

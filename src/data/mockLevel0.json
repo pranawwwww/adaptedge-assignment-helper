@@ -1,0 +1,46 @@
+{
+  "status": "LEVEL_0_OVERVIEW",
+  "main_content_md": "# Assignment Overview\n\n**Goal:**\nImplement Principal Component Analysis (PCA) on a given dataset using both scikit-learn and a custom implementation. Visualize the results by plotting the data and the principal components as arrows indicating direction and variance.\n\n**Requirements:**\n1.  Load data from a `.npz` file.\n2.  Compute two principal components using scikit-learn's PCA.\n3.  Implement PCA from scratch without using scikit-learn's API.\n4.  Plot the data and the principal components, using `quiver` to represent the principal components as arrows.\n\n**Deliverables:**\n1.  A NumPy array of shape (300, 2) loaded from the `.npz` file.\n2.  The principal components computed using scikit-learn.\n3.  A custom implementation of PCA.\n4.  A plot showing the data points and the principal components as arrows originating from the mean of the data.\n\n**Learning Objectives:**\n1.  Understand the concept of Principal Component Analysis (PCA).\n2.  Learn how to load data from a `.npz` file into a NumPy array.\n3.  Learn how to use scikit-learn's PCA implementation.\n4.  Gain experience implementing PCA from scratch.\n5.  Understand how to visualize PCA results using `matplotlib`'s `plot` and `quiver` functions.",
+  
+  "flashcards": [
+    {
+      "heading": "Principal Component Analysis (PCA)",
+      "flashcard_content": "A dimensionality reduction technique that transforms data into a new coordinate system where the principal components (PCs) capture the most variance. The first PC captures the most variance, the second PC captures the second most variance, and so on."
+    },
+    {
+      "heading": "NumPy Arrays",
+      "flashcard_content": "A fundamental data structure in Python for numerical computing. NumPy arrays are efficient and support various mathematical operations."
+    },
+    {
+      "heading": "Variance",
+      "flashcard_content": "A measure of how spread out data points are in a dataset. Higher variance indicates more spread."
+    },
+    {
+      "heading": "Mean",
+      "flashcard_content": "The average value of a dataset. It is calculated by summing all the data points and dividing by the number of data points."
+    },
+    {
+      "heading": "Quiver Plot",
+      "flashcard_content": "A type of plot that displays vector fields as arrows. Each arrow represents the magnitude and direction of a vector at a given point."
+    }
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_concept1_level0",
+      "concept_focus": "Principal Component Analysis (PCA)",
+      "type": "MCQ",
+      "question_text": "What is the primary goal of PCA?",
+      "options": ["To increase the dimensionality of the data.", "To reduce the dimensionality of the data while preserving important information.", "To add noise to the data.", "To completely remove all data features."],
+      "correct_answers": ["To reduce the dimensionality of the data while preserving important information."]
+    },
+    {
+      "id": "q2_concept1_level0",
+      "type": "MAQ",
+      "concept_focus": "Principal Component Analysis (PCA)",
+      "question_text": "Which of the following are benefits of using PCA? Select all that apply.",
+      "options": ["Dimensionality Reduction", "Increased Computational Cost", "Noise Reduction", "Feature Extraction"],
+      "correct_answers": ["Dimensionality Reduction", "Noise Reduction", "Feature Extraction"]
+    }
+  ]
+}

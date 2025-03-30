@@ -1,8 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
-import { Menu, X, Brain, UserCircle2, Upload, Sparkles, BookOpen, FileCheck } from 'lucide-react';
+import { Menu, X, Brain, UserCircle2, Upload, Sparkles, BookOpen, FileCheck, Award } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -52,6 +51,10 @@ const Navbar = () => {
                 <FileCheck className="w-4 h-4 mr-1.5" />
                 Assignment
               </NavLink>
+              <NavLink to="/master-it" active={isActive('/master-it') || location.pathname.startsWith('/master-it/')}>
+                <Award className="w-4 h-4 mr-1.5" />
+                Master It
+              </NavLink>
               <Link to="/process">
                 <Button variant="default" size="sm" className="ml-4 rounded-full shadow-sm hover:shadow animate-scale-in">
                   <Sparkles className="mr-1.5 h-4 w-4" />
@@ -88,6 +91,10 @@ const Navbar = () => {
             <MobileNavLink to="/assignment" onClick={() => setIsOpen(false)}>
               <FileCheck className="w-5 h-5 mr-2" />
               Assignment
+            </MobileNavLink>
+            <MobileNavLink to="/master-it" onClick={() => setIsOpen(false)}>
+              <Award className="w-5 h-5 mr-2" />
+              Master It
             </MobileNavLink>
             <Link 
               to="/process" 
