@@ -180,9 +180,9 @@ const Flashcards = () => {
           
           <Card className="mb-8 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Interactive Learning</CardTitle>
+              <CardTitle>Two-Phase Learning</CardTitle>
               <CardDescription>
-                Learn the concepts and test your knowledge. You need to answer 80% correctly to proceed to the assignment.
+                First learn the concepts, then test your knowledge. You need to answer 80% correctly to proceed to the assignment.
               </CardDescription>
             </CardHeader>
             <CardContent>
