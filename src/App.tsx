@@ -10,6 +10,8 @@ import Dashboard from "./pages/Dashboard";
 import SignUp from "./pages/SignUp";
 import Upload from "./pages/Upload";
 import Process from "./pages/Process";
+import Flashcards from "./pages/Flashcards";
+import Assignment from "./pages/Assignment";
 
 // Create a QueryClient for data fetching (will be used with Supabase)
 const queryClient = new QueryClient({
@@ -38,6 +40,8 @@ const App = () => (
             <Route path="/signup" element={<SignUp />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/process" element={<Process />} />
+            <Route path="/flashcards" element={<Flashcards />} />
+            <Route path="/assignment" element={<Assignment />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

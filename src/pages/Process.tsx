@@ -1,22 +1,23 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, Upload, Brain, BarChart4, FileText, Lightbulb, CheckCircle } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ArrowLeft, BookOpen, Upload, Brain, BarChart4, FileText, Lightbulb, CheckCircle, Award } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import Navbar from "@/components/Navbar";
 import MaterialUpload from "@/components/MaterialUpload";
-import LevelSelector from "@/components/LevelSelector";
-import GuidedLearning from "@/components/GuidedLearning";
 import CourseSelection from "@/components/CourseSelection";
 
 const Process = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [uploadedMaterials, setUploadedMaterials] = useState<File[]>([]);
   const [uploadedAssignment, setUploadedAssignment] = useState<File[]>([]);
-  const [selectedLevel, setSelectedLevel] = useState(3);
+  const [selectedHelpType, setSelectedHelpType] = useState<string>("master-it");
   
   const steps = [
     {
@@ -45,14 +46,14 @@ const Process = () => {
     },
     {
       id: 5,
-      title: "Select Assistance Level",
-      description: "Choose the level of assistance you need.",
+      title: "Select Help Type",
+      description: "Choose the type of help you need for your assignment.",
       icon: BarChart4
     },
     {
       id: 6,
-      title: "Guided Learning",
-      description: "Get personalized guidance that references your materials.",
+      title: "Study & Learn",
+      description: "Study flashcards and complete the assignment with guidance.",
       icon: Lightbulb
     }
   ];
@@ -81,22 +82,11 @@ const Process = () => {
     }, 3000);
   };
   
-  const handleLevelSelect = (level: number) => {
-    setSelectedLevel(level);
-    goToNextStep();
-  };
-  
-  const handleCompleteGuidedLearning = () => {
-    toast({
-      title: "Learning session completed!",
-      description: "You've successfully completed this guided learning session.",
-    });
+  const handleHelpTypeSelect = (type: string) => {
+    setSelectedHelpType(type);
     
-    // Reset to start
-    setCurrentStep(1);
-    setSelectedCourse(null);
-    setUploadedMaterials([]);
-    setUploadedAssignment([]);
+    // Navigate to flashcards page with selected help type
+    navigate("/flashcards", { state: { helpType: type } });
   };
   
   const goToNextStep = () => {
@@ -145,15 +135,69 @@ const Process = () => {
           </Card>
         );
       case 5:
-        return <LevelSelector onLevelSelect={handleLevelSelect} defaultLevel={selectedLevel} />;
-      case 6:
         return (
-          <GuidedLearning
-            level={selectedLevel}
-            assignmentTitle="Mathematical Modeling Assignment"
-            onComplete={handleCompleteGuidedLearning}
-            onBack={goToPreviousStep}
-          />
+          <Card>
+            <CardHeader>
+              <CardTitle>Select Help Type</CardTitle>
+              <CardDescription>
+                Choose the type of assistance that best matches your learning needs.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <RadioGroup value={selectedHelpType} onValueChange={setSelectedHelpType} className="space-y-4">
+                <Card className={`p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${selectedHelpType === "quick-start" ? "border-primary bg-primary/5" : ""}`}>
+                  <RadioGroupItem value="quick-start" id="quick-start" className="sr-only" />
+                  <label htmlFor="quick-start" className="flex items-start cursor-pointer">
+                    <div className="flex-shrink-0 mt-1">
+                      <Brain className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-lg font-medium">Quick Start</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Basic tutorials, resources, and straightforward answers for a gentle introduction to the material.
+                      </p>
+                    </div>
+                  </label>
+                </Card>
+                
+                <Card className={`p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${selectedHelpType === "learn-fast" ? "border-primary bg-primary/5" : ""}`}>
+                  <RadioGroupItem value="learn-fast" id="learn-fast" className="sr-only" />
+                  <label htmlFor="learn-fast" className="flex items-start cursor-pointer">
+                    <div className="flex-shrink-0 mt-1">
+                      <Lightbulb className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-lg font-medium">Learn Fast</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Provides hints, nudges, and partial answers for grasping the basics quickly without diving too deep.
+                      </p>
+                    </div>
+                  </label>
+                </Card>
+                
+                <Card className={`p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${selectedHelpType === "master-it" ? "border-primary bg-primary/5" : ""}`}>
+                  <RadioGroupItem value="master-it" id="master-it" className="sr-only" />
+                  <label htmlFor="master-it" className="flex items-start cursor-pointer">
+                    <div className="flex-shrink-0 mt-1">
+                      <Award className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="ml-3">
+                      <h3 className="text-lg font-medium">Master It</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Full tutorials, detailed examples, and interactive flashcards to help you gain comprehensive knowledge.
+                      </p>
+                    </div>
+                  </label>
+                </Card>
+              </RadioGroup>
+              
+              <div className="mt-6 flex justify-end">
+                <Button onClick={() => handleHelpTypeSelect(selectedHelpType)}>
+                  Continue
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         );
       default:
         return null;
@@ -171,7 +215,7 @@ const Process = () => {
               variant="ghost" 
               className="mb-4"
               onClick={goToPreviousStep}
-              disabled={currentStep === 1 || currentStep === 4 || currentStep === 6}
+              disabled={currentStep === 1 || currentStep === 4}
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
@@ -179,7 +223,7 @@ const Process = () => {
             
             <h1 className="text-3xl font-bold tracking-tight">Assignment Helper</h1>
             <p className="text-gray-500 dark:text-gray-400 mt-1">
-              Get personalized assistance that adapts to your learning level.
+              Get personalized assistance that adapts to your learning style.
             </p>
           </div>
           

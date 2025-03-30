@@ -3,12 +3,10 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { BookOpen, Upload, BarChart4, Brain, BookText, FileUp, Lightbulb, Sparkles, GraduationCap, ChevronDown } from "lucide-react";
+import { BookOpen, Upload, Brain, FileUp, Lightbulb, Sparkles, ChevronDown, Award } from "lucide-react";
 import Navbar from "@/components/Navbar";
 
 const Index = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [animatedElements, setAnimatedElements] = useState<HTMLElement[]>([]);
   const [isVisible, setIsVisible] = useState(false);
 
   // Observer for scroll animations
@@ -46,15 +44,15 @@ const Index = () => {
 
   const features = [
     {
-      title: "Personalized Learning",
-      description: "Adaptive assignments that match your learning level (1-5)",
-      icon: <GraduationCap className="h-12 w-12 text-primary mb-3" />,
+      title: "Interactive Flashcards",
+      description: "Test your knowledge with flip cards that adapt to your learning style",
+      icon: <Sparkles className="h-12 w-12 text-primary mb-3" />,
       color: "pastel-gradient-blue"
     },
     {
       title: "Material Integration",
       description: "Upload lecture notes, textbooks, and class materials",
-      icon: <BookText className="h-12 w-12 text-primary mb-3" />,
+      icon: <Upload className="h-12 w-12 text-primary mb-3" />,
       color: "pastel-gradient-purple"
     },
     {
@@ -64,43 +62,31 @@ const Index = () => {
       color: "pastel-gradient-peach"
     },
     {
-      title: "Knowledge Verification",
-      description: "Quiz to ensure understanding of key concepts",
-      icon: <Sparkles className="h-12 w-12 text-primary mb-3" />,
-      color: "pastel-gradient-blue"
+      title: "Personalized Feedback",
+      description: "Get tailored feedback based on your chosen learning style",
+      icon: <Award className="h-12 w-12 text-primary mb-3" />,
+      color: "pastel-gradient-sunshine"
     }
   ];
 
-  const steps = [
+  const helpTypes = [
     {
-      title: "Material Integration",
-      description: "Upload lecture notes, textbook chapters, and assignment instructions.",
-      icon: <Upload className="h-6 w-6 text-primary" />
+      title: "Quick Start",
+      description: "Basic tutorials and resources for a gentle introduction to the material",
+      icon: <Brain className="h-10 w-10 text-primary mb-3" />,
+      color: "pastel-gradient-blue"
     },
     {
-      title: "Material Analysis",
-      description: "AI processes uploaded content to understand course concepts and requirements.",
-      icon: <Brain className="h-6 w-6 text-primary" />
+      title: "Learn Fast",
+      description: "Hints and partial answers to grasp basics quickly without diving deep",
+      icon: <Lightbulb className="h-10 w-10 text-primary mb-3" />,
+      color: "pastel-gradient-lavender"
     },
     {
-      title: "Level Selection",
-      description: "Choose assistance level (1-5) based on your learning needs.",
-      icon: <BarChart4 className="h-6 w-6 text-primary" />
-    },
-    {
-      title: "Guided Learning",
-      description: "Get contextualized explanations connecting your materials to the assignment.",
-      icon: <BookOpen className="h-6 w-6 text-primary" />
-    },
-    {
-      title: "Knowledge Verification",
-      description: "Complete quizzes that check your understanding of material-specific concepts.",
-      icon: <BookText className="h-6 w-6 text-primary" />
-    },
-    {
-      title: "Contribution Assessment",
-      description: "Receive feedback on your comprehension and application of course concepts.",
-      icon: <FileUp className="h-6 w-6 text-primary" />
+      title: "Master It",
+      description: "Comprehensive tutorials and interactive flashcards for deep understanding",
+      icon: <Award className="h-10 w-10 text-primary mb-3" />,
+      color: "pastel-gradient-mint"
     }
   ];
 
@@ -114,19 +100,20 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 flex flex-col md:flex-row items-center relative z-10">
           <div className={`md:w-1/2 mb-10 md:mb-0 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.1s'}}>
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl mb-6">
-              <span className="gradient-text">Adaptive</span> Assignment
-              <br /> Helper for Students
+              <span className="gradient-text">Adaptive</span> Learning
+              <br /> For Your Assignments
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-              Don't just complete assignments—understand them. Our AI-powered assistant adapts to your level and helps you grasp concepts through your own course materials.
+              Don't just complete assignments—understand them. Our flashcard-based learning system adapts to your style and helps you master concepts through your own course materials.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link to="/signup">
+              <Link to="/process">
                 <Button size="lg" className="w-full sm:w-auto shadow-lg hover:shadow-xl transition-all duration-300 rounded-full">
-                  Get Started
+                  <Upload className="mr-2 h-5 w-5" />
+                  Upload Assignment
                 </Button>
               </Link>
-              <Link to="/dashboard">
+              <Link to="/signup">
                 <Button size="lg" variant="outline" className="w-full sm:w-auto hover-lift rounded-full">
                   Try Demo
                 </Button>
@@ -135,7 +122,7 @@ const Index = () => {
           </div>
           <div className={`md:w-1/2 flex justify-center ${isVisible ? 'animate-fade-in' : 'opacity-0'}`} style={{animationDelay: '0.3s'}}>
             <img 
-              src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" 
+              src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" 
               alt="Student learning with AI" 
               className="rounded-lg shadow-xl max-w-full h-auto hover-lift"
             />
@@ -151,13 +138,39 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Features Section */}
+      {/* Help Types Section */}
       <div id="features" className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16 scroll-animate">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Choose Your Learning Style</h2>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+              AdaptED AI offers different learning approaches to match your needs
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {helpTypes.map((type, index) => (
+              <div key={index} className={`hover-lift rounded-xl overflow-hidden scroll-animate stagger-item`}>
+                <div className={`h-full flex flex-col items-center text-center p-8 ${type.color}`}>
+                  <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-4 rounded-full mb-4">
+                    {type.icon}
+                  </div>
+                  <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">{type.title}</h3>
+                  <p className="mt-2 text-gray-700 dark:text-gray-300">{type.description}</p>
+                  <Link to="/process" className="mt-6">
+                    <Button variant="secondary" className="shadow-sm">
+                      Start Learning
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <div className="text-center mb-16 scroll-animate">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Features That Enhance Your Learning</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              AdaptED AI doesn't just help you complete assignments—it helps you understand the concepts behind them.
+              AdaptED AI doesn't just help you complete assignments—it helps you understand the concepts through interactive learning.
             </p>
           </div>
           
@@ -183,28 +196,82 @@ const Index = () => {
           <div className="text-center mb-16 scroll-animate">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">How AdaptED AI Works</h2>
             <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Our step-by-step process ensures that you not only complete your assignments but understand the concepts behind them.
+              Our flashcard-based approach ensures you not only complete assignments but truly understand the concepts.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 relative">
-            {steps.map((step, index) => (
-              <div 
-                key={index} 
-                className={`step-card scroll-animate stagger-item backdrop-blur-sm bg-white/70 dark:bg-gray-900/70 
-                  ${currentStep === index + 1 ? 'step-card-active' : ''}`}
-                onMouseEnter={() => setCurrentStep(index + 1)}
-              >
-                <div className="step-number shadow-md">{index + 1}</div>
-                <div className="flex flex-col">
-                  <div className="flex items-center mb-4">
-                    {step.icon}
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-white ml-2">{step.title}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative">
+            <div className="scroll-animate stagger-item">
+              <Card className="backdrop-blur-sm bg-white/70 dark:bg-gray-900/70 overflow-hidden">
+                <CardContent className="p-0">
+                  <img 
+                    src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                    alt="Interactive learning" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">Step 1: Upload Materials</h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Upload your assignment and course materials. Our AI analyzes them to create personalized flashcards and quizzes.
+                    </p>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300">{step.description}</p>
-                </div>
-              </div>
-            ))}
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="scroll-animate stagger-item">
+              <Card className="backdrop-blur-sm bg-white/70 dark:bg-gray-900/70 overflow-hidden">
+                <CardContent className="p-0">
+                  <img 
+                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                    alt="Interactive flashcards" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">Step 2: Learn with Flashcards</h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Study interactive flashcards that test your knowledge. Flip cards to reveal answers and explanations.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="scroll-animate stagger-item">
+              <Card className="backdrop-blur-sm bg-white/70 dark:bg-gray-900/70 overflow-hidden">
+                <CardContent className="p-0">
+                  <img 
+                    src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                    alt="Quiz completion" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">Step 3: Test Your Knowledge</h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Complete quizzes to verify your understanding. Get immediate feedback with detailed explanations.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+            
+            <div className="scroll-animate stagger-item">
+              <Card className="backdrop-blur-sm bg-white/70 dark:bg-gray-900/70 overflow-hidden">
+                <CardContent className="p-0">
+                  <img 
+                    src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                    alt="Assignment completion" 
+                    className="w-full h-64 object-cover"
+                  />
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2">Step 4: Complete Your Assignment</h3>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      Apply what you've learned to complete your assignment. Receive personalized feedback to improve your work.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
@@ -218,11 +285,11 @@ const Index = () => {
               Ready to transform how you approach assignments?
             </h2>
             <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
-              Join AdaptED AI today and experience a new way of learning that adapts to your needs and helps you truly understand course concepts.
+              Join AdaptED AI today and experience interactive learning with flashcards that adapt to your needs and help you truly understand course concepts.
             </p>
-            <Link to="/signup">
+            <Link to="/process">
               <Button size="lg" variant="default" className="font-medium rounded-full shadow-lg hover:shadow-xl px-8">
-                Start Your Journey
+                Start Learning Now
               </Button>
             </Link>
           </div>
