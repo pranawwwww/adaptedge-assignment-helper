@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,87 +7,46 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-
-    /* Pastel blue */
-    --primary: 210 100% 77%;
-    --primary-foreground: 210 40% 20%;
-
-    /* Pastel purple */
-    --secondary: 280 84% 80%;
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
-
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-
-    /* Pastel lavender */
-    --accent: 260 84% 90%;
+    --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
-
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 224 64% 33%;
-
-    --radius: 1rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 210 100% 77%;
-    --sidebar-primary-foreground: 0 0% 20%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --ring: 262 83% 58%;
+    --radius: 0.75rem;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
-
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-
-    /* Pastel blue in dark mode */
-    --primary: 210 100% 65%;
+    --primary: 262 83% 58%;
     --primary-foreground: 222.2 47.4% 11.2%;
-
-    /* Pastel purple in dark mode */
-    --secondary: 280 84% 70%;
+    --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    /* Pastel lavender in dark mode */
-    --accent: 260 84% 50%;
+    --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 210 100% 65%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --ring: 262 83% 58%;
   }
 }
 
@@ -94,167 +54,48 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }
 }
 
-/* Gradient text styling */
-.gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400;
-}
+@layer utilities {
+  .pastel-pattern {
+    background-color: #f9f7ff;
+    background-image: 
+      radial-gradient(#e2d8ff 2px, transparent 2px),
+      radial-gradient(#e2d8ff 2px, #f9f7ff 2px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+  }
 
-/* Card styling */
-.feature-card {
-  @apply p-6 rounded-lg border border-border shadow-sm hover:shadow-md transition-all duration-300 bg-card hover:translate-y-[-5px];
-}
+  .dark .pastel-pattern {
+    background-color: #0f0a1a;
+    background-image: 
+      radial-gradient(#2c1d54 2px, transparent 2px),
+      radial-gradient(#2c1d54 2px, #0f0a1a 2px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+  }
 
-.step-card {
-  @apply p-6 rounded-lg border border-border shadow-sm relative bg-card transition-all duration-300;
-}
+  .perspective-1000 {
+    perspective: 1000px;
+  }
 
-.step-card-active {
-  @apply border-primary bg-accent/20 scale-105;
-}
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
 
-.step-number {
-  @apply absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-sm;
-}
-
-/* Animation classes */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideIn {
-  from { transform: translateX(-20px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { transform: scale(0.95); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes progressAnimation {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
-@keyframes cardFlip {
-  0% { transform: rotateY(0deg); }
-  100% { transform: rotateY(180deg); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-.animate-slide-in {
-  animation: slideIn 0.5s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.4s ease-out forwards;
-}
-
-.animate-pulse {
-  animation: pulse 2s infinite;
-}
-
-.animate-progress {
-  animation: progressAnimation 3s ease-in-out;
-}
-
-.animate-flip {
-  animation: cardFlip 0.6s ease-out forwards;
-}
-
-/* Staggered animations */
-.stagger-item:nth-child(1) { animation-delay: 0.1s; }
-.stagger-item:nth-child(2) { animation-delay: 0.2s; }
-.stagger-item:nth-child(3) { animation-delay: 0.3s; }
-.stagger-item:nth-child(4) { animation-delay: 0.4s; }
-.stagger-item:nth-child(5) { animation-delay: 0.5s; }
-.stagger-item:nth-child(6) { animation-delay: 0.6s; }
-
-/* Pastel background patterns */
-.pastel-pattern {
-  background-image: 
-    radial-gradient(rgba(255, 220, 255, 0.1) 8%, transparent 8%),
-    radial-gradient(rgba(255, 220, 255, 0.1) 8%, transparent 8%);
-  background-position: 0 0, 25px 25px;
-  background-size: 50px 50px;
-}
-
-/* Card hover effects */
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-/* Pastel gradient backgrounds */
-.pastel-gradient-blue {
-  background: linear-gradient(135deg, #D3E4FD 0%, #E5DEFF 100%);
-}
-
-.pastel-gradient-purple {
-  background: linear-gradient(135deg, #E5DEFF 0%, #FFDEE2 100%);
-}
-
-.pastel-gradient-peach {
-  background: linear-gradient(135deg, #FDE1D3 0%, #FEF7CD 100%);
-}
-
-.pastel-gradient-mint {
-  background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%);
-}
-
-.pastel-gradient-lavender {
-  background: linear-gradient(135deg, #E8E6FF 0%, #D1C4E9 100%);
-}
-
-.pastel-gradient-sunshine {
-  background: linear-gradient(135deg, #FFF9C4 0%, #FFECB3 100%);
-}
-
-.textarea {
-  min-height: 150px;
-  resize: vertical;
-}
-
-@keyframes loadingProgress {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
-.animate-loading-progress {
-  animation: loadingProgress 2s ease-in-out;
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.transform-style-3d {
-  transform-style: preserve-3d;
-}
-
-.backface-hidden {
-  backface-visibility: hidden;
-}
-
-.rotate-y-180 {
-  transform: rotateY(180deg);
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  
+  .animate-progress {
+    animation: progress 2s linear infinite;
+  }
+  
+  @keyframes progress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
 }

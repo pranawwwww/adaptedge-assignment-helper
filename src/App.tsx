@@ -6,8 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import Dashboard from "./pages/Dashboard";
-import SignUp from "./pages/SignUp";
 import Upload from "./pages/Upload";
 import Process from "./pages/Process";
 import Flashcards from "./pages/Flashcards";
@@ -36,8 +34,6 @@ const App = () => (
         <div className="min-h-screen">
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/signup" element={<SignUp />} />
             <Route path="/upload" element={<Upload />} />
             <Route path="/process" element={<Process />} />
             <Route path="/flashcards" element={<Flashcards />} />
