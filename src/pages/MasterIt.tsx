@@ -721,9 +721,13 @@ const MasterIt = () => {
                                     {flashcard.heading}
                                   </h3>
                                   <div className="p-5 bg-purple-50 dark:bg-gray-700 rounded-lg border border-purple-100 dark:border-purple-800 shadow-inner">
-                                    <p className="text-lg leading-relaxed">
-                                      {flashcard.flashcard_content}
-                                    </p>
+                                    <Suspense fallback={<p className="text-lg">Loading content...</p>}>
+                                      <div className="prose dark:prose-invert max-w-none prose-p:my-2 prose-p:leading-relaxed prose-headings:text-purple-700 dark:prose-headings:text-purple-300">
+                                        <ReactMarkdown components={MarkdownComponents as any}>
+                                          {flashcard.flashcard_content}
+                                        </ReactMarkdown>
+                                      </div>
+                                    </Suspense>
                                   </div>
                                 </div>
                                 {index === currentFlashcardIndex && (
