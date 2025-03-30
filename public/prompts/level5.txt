@@ -1,0 +1,44 @@
+Review Level: Final Assessment Prompt
+
+Here are my answers to the Level 4 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Provide final feedback on my overall understanding
+2. Create a comprehensive review of all concepts covered
+3. Include a full practice assignment that mimics the actual assignment
+4. Provide detailed solutions and explanations
+
+Return ONLY this JSON structure:
+
+{
+  "status": "FINAL_REVIEW",
+  
+  "feedback_md": "# Final Assessment Feedback\n\n[Your detailed markdown feedback on practical application understanding]",
+  
+  "main_content_md": "# Comprehensive Review\n\n[Complete review of all concepts, their integration, and practical applications, structured as a study guide for the assignment]",
+  
+  "practice_assignment_md": "# Practice Assignment\n\n[A complete practice assignment that closely mimics the actual assignment requirements]",
+  
+  "solution_md": "# Practice Assignment Solution\n\n[Detailed solution to the practice assignment with explanations of the approach and concepts applied]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 1 - Complete Summary",
+      "flashcard_content": "Comprehensive summary of the first key concept"
+    },
+    {
+      "heading": "Key Concept 2 - Complete Summary",
+      "flashcard_content": "Comprehensive summary of the second key concept"
+    },
+    {
+      "heading": "Integration Framework",
+      "flashcard_content": "Framework for applying all concepts together in assignments"
+    }
+    // Additional summary flashcards as needed
+  ],
+  
+  "assessment_questions": []
+}

@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
+import { ApiKeyWarning } from '@/components/ApiKeyWarning';
+import AnswersUpload from '@/components/AnswersUpload';
 import { 
   SidebarProvider, 
   Sidebar, 
@@ -15,9 +17,11 @@ import {
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
-import { Bookmark, BookOpen, CheckCircle, ChevronRight, ChevronDown, Loader2 } from 'lucide-react';
-import ReactMarkdown from 'react-markdown';
-import { Card } from '@/components/ui/card';
+import { Bookmark, BookOpen, CheckCircle, ChevronRight, ChevronDown, Loader2, AlertCircle } from 'lucide-react';
+// Lazy load ReactMarkdown to improve initial load time
+const ReactMarkdown = lazy(() => import('react-markdown'));
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { 
   fetchLevelContent, 
   submitAnswersAndGetNextLevel,
@@ -97,7 +101,7 @@ const levelTitles: Record<string, string> = {
 };
 
 // Progress states for tracking user progress through the content
-type ProgressState = 'reading' | 'flashcards' | 'questions' | 'completed';
+type ProgressState = 'reading' | 'flashcards' | 'questions' | 'completed' | 'upload';
 
 // Available levels
 const availableLevels = [
@@ -106,7 +110,8 @@ const availableLevels = [
   { id: 2, title: 'Advanced Understanding' },
   { id: 3, title: 'Practical Application' },
   { id: 4, title: 'Expert Implementation' },
-  { id: 5, title: 'Mastery' }
+  { id: 5, title: 'Mastery' },
+  { id: 6, title: 'Final Review' }
 ];
 
 const MasterIt = () => {
@@ -140,6 +145,17 @@ const MasterIt = () => {
           // For demo purposes, you might need to populate uploadedFiles from localStorage
           // In a real app, these would come from the file upload component
           const levelData = await fetchLevelContent(levelIdNumber, uploadedFiles);
+          
+          // Log the complete Level 0 data for debugging
+          console.log("======= LEVEL ZERO DATA =======");
+          console.log("Status:", levelData.status);
+          console.log("Assignment Summary MD present:", !!levelData.assignment_summary_md);
+          console.log("Main Content MD present:", !!levelData.main_content_md || !!levelData.main_conent_md);
+          console.log("Flashcards:", levelData.flashcards.length);
+          console.log("Questions:", levelData.assessment_questions.length);
+          console.log("Complete Level 0 data:", JSON.stringify(levelData, null, 2));
+          console.log("==============================");
+          
           setCurrentLevel(levelData);
           // Store current level's questions for later use
           setPreviousQuestions(levelData.assessment_questions);
@@ -159,6 +175,16 @@ const MasterIt = () => {
               answers: answeredQuestions
             }
           );
+          
+          // Debug logging to check if feedback_md is present
+          console.log(`Level ${levelIdNumber} feedback_md present: ${!!levelData.feedback_md}`);
+          if (!levelData.feedback_md && levelIdNumber > 0) {
+            console.warn(`Level ${levelIdNumber} missing feedback_md`);
+          }
+          
+          // Log the complete LevelData object for debugging
+          console.log(`Complete Level ${levelIdNumber} data:`, JSON.stringify(levelData, null, 2));
+          
           setCurrentLevel(levelData);
           // Store current level's questions for next level
           setPreviousQuestions(levelData.assessment_questions);
@@ -364,6 +390,48 @@ const MasterIt = () => {
     }
   };
 
+  // Handle answers document upload at level 5
+  const handleAnswersDocumentUpload = (file: File) => {
+    // Process the uploaded file
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const fileContent = e.target?.result as string;
+      
+      try {
+        // Save the answers document to session storage
+        const answersDocument = {
+          name: file.name,
+          content: fileContent,
+          type: file.type
+        };
+        
+        sessionStorage.setItem('answersDocument', JSON.stringify(answersDocument));
+        
+        // Navigate to level 6 (Final Review)
+        toast({
+          title: "Answers document uploaded",
+          description: "Your answers will be reviewed and feedback will be provided in the Final Review.",
+        });
+        
+        // Set a short delay before navigating
+        setTimeout(() => {
+          navigate('/master-it/6');
+        }, 1500);
+        
+      } catch (error) {
+        console.error("Error processing answers document:", error);
+        toast({
+          title: "Error processing document",
+          description: "There was a problem processing your answers document. Please try again.",
+          variant: "destructive"
+        });
+      }
+    };
+    
+    // Read the file as text
+    reader.readAsText(file);
+  };
+
   if (isLoading && !currentLevel) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
@@ -455,235 +523,362 @@ const MasterIt = () => {
         <SidebarInset className="overflow-y-auto">
           <Navbar />
           <div className="container max-w-4xl mx-auto p-6">
+            {/* API Key Warning */}
+            <ApiKeyWarning />
+            
             {/* Feedback Section - Only shown if there is feedback */}
             {currentLevel.feedback_md && (
               <div className="mb-8">
-                <Card className="p-6 bg-white dark:bg-gray-800 shadow-md overflow-hidden border-l-4 border-blue-500">
-                  <h2 className="text-2xl font-bold mb-4 text-blue-700 dark:text-blue-300">Previous Level Feedback</h2>
-                  <div className="prose dark:prose-invert max-w-none">
-                    <ReactMarkdown components={MarkdownComponents as any}>
-                      {currentLevel.feedback_md}
-                    </ReactMarkdown>
-                  </div>
+                <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
+                  <CardHeader className="bg-blue-50 dark:bg-blue-900/30 border-b border-blue-100 dark:border-blue-800">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-2xl font-bold text-blue-700 dark:text-blue-300 flex items-center">
+                        <CheckCircle className="mr-2 h-5 w-5" />
+                        Previous Level Feedback
+                      </h2>
+                      {parseInt(levelId) > 0 && (
+                        <span className="bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">
+                          Level {parseInt(levelId) - 1} Feedback
+                        </span>
+                      )}
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    {isLoading ? (
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-3/4" />
+                        <Skeleton className="h-4 w-5/6" />
+                        <Skeleton className="h-4 w-2/3" />
+                      </div>
+                    ) : (
+                      <div className="prose dark:prose-invert max-w-none">
+                        <Suspense fallback={
+                          <div className="animate-pulse space-y-3">
+                            <div className="h-4 bg-blue-100 dark:bg-blue-800 rounded w-3/4"></div>
+                            <div className="h-4 bg-blue-100 dark:bg-blue-800 rounded w-5/6"></div>
+                            <div className="h-4 bg-blue-100 dark:bg-blue-800 rounded w-2/3"></div>
+                          </div>
+                        }>
+                          <ReactMarkdown components={MarkdownComponents as any}>
+                            {currentLevel.feedback_md}
+                          </ReactMarkdown>
+                        </Suspense>
+                      </div>
+                    )}
+                  </CardContent>
                 </Card>
               </div>
             )}
 
             {/* Content Section */}
             <div className="mb-8">
-              <Card className="p-6 bg-white dark:bg-gray-800 shadow-md overflow-hidden">
-                <div className="flex items-center justify-between mb-4">
-                  <h1 className="text-3xl font-bold">{levelTitle}</h1>
-                  <div className="text-sm bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full">
-                    Level {levelId}
+              <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
+                <CardHeader className="border-b border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-3xl font-bold">{levelTitle}</h1>
+                    <div className="text-sm bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full">
+                      Level {levelId}
+                    </div>
                   </div>
-                </div>
+                </CardHeader>
                 
-                {/* Enhanced markdown rendering with custom components */}
-                <div className="prose dark:prose-invert max-w-none prose-headings:text-purple-900 dark:prose-headings:text-purple-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">
-                  <ReactMarkdown components={MarkdownComponents as any}>
-                    {mainContent}
-                  </ReactMarkdown>
-                </div>
-                
-                {/* Continue button */}
-                <div className="mt-8 flex justify-center">
-                  <Button 
-                    onClick={handleContinueToFlashcards} 
-                    className="px-8"
-                  >
-                    Continue to Flashcards
-                    <ChevronDown className="ml-2 h-4 w-4" />
-                  </Button>
-                </div>
+                <CardContent className="p-6">
+                  {isLoading ? (
+                    <div className="space-y-4">
+                      <Skeleton className="h-6 w-3/4" />
+                      <Skeleton className="h-4 w-5/6" />
+                      <Skeleton className="h-4 w-2/3" />
+                      <Skeleton className="h-24 w-full" />
+                      <Skeleton className="h-4 w-4/5" />
+                      <Skeleton className="h-4 w-3/4" />
+                    </div>
+                  ) : (
+                    /* Enhanced markdown rendering with custom components */
+                    <div className="prose dark:prose-invert max-w-none prose-headings:text-purple-900 dark:prose-headings:text-purple-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">
+                      <Suspense fallback={
+                        <div className="animate-pulse space-y-3">
+                          <div className="h-6 bg-purple-100 dark:bg-purple-900/30 rounded w-3/4"></div>
+                          <div className="h-4 bg-purple-100 dark:bg-purple-900/30 rounded w-5/6"></div>
+                          <div className="h-4 bg-purple-100 dark:bg-purple-900/30 rounded w-2/3"></div>
+                          <div className="h-24 bg-purple-100 dark:bg-purple-900/30 rounded w-full"></div>
+                        </div>
+                      }>
+                        <ReactMarkdown components={MarkdownComponents as any}>
+                          {/* For level 0, show assignment_summary_md if available, otherwise use mainContent */}
+                          {levelId === '0' && currentLevel.assignment_summary_md ? 
+                            currentLevel.assignment_summary_md : 
+                            mainContent}
+                        </ReactMarkdown>
+                      </Suspense>
+                    </div>
+                  )}
+                  
+                  {/* Continue button */}
+                  {!isLoading && (
+                    <div className="mt-8 flex justify-center">
+                      <Button 
+                        onClick={handleContinueToFlashcards} 
+                        className="px-8"
+                      >
+                        Continue to Flashcards
+                        <ChevronDown className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
               </Card>
             </div>
 
             {/* Flashcards Section - Only shown after reading content */}
-            {progressState !== 'reading' && currentLevel.flashcards.length > 0 && (
+            {progressState !== 'reading' && currentLevel.flashcards && currentLevel.flashcards.length > 0 && (
               <div className="mb-8">
-                <div className="flex justify-between items-center mb-4" ref={flashcardsHeaderRef}>
-                  <h2 className="text-2xl font-bold flex items-center">
-                    <Bookmark className="mr-2 h-5 w-5 text-purple-600" />
-                    Flashcards
-                  </h2>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    {currentFlashcardIndex + 1} of {currentLevel.flashcards.length}
-                  </div>
-                </div>
-                
-                <div className="space-y-6">
-                  {currentLevel.flashcards.map((flashcard, index) => (
-                    <Card 
-                      key={`${flashcard.heading}-${index}`} 
-                      className={`p-6 bg-white dark:bg-gray-800 shadow-md border transition-all duration-300 ${
-                        index === currentFlashcardIndex ? 'border-purple-500 dark:border-purple-400' : 'border-purple-100/50 dark:border-purple-900/50'
-                      }`}
-                      ref={el => flashcardRefs.current[index] = el}
-                    >
-                      <div className="min-h-[180px] flex flex-col">
-                        <div className="flex-1 mb-4">
-                          <h3 className="text-lg font-medium mb-3 text-purple-700 dark:text-purple-300">
-                            {index === currentFlashcardIndex && showAnswer ? "Answer:" : "Question:"}
-                          </h3>
-                          <div className="p-4 bg-purple-50 dark:bg-gray-700 rounded-lg">
-                            <p className="text-lg">
-                              {index === currentFlashcardIndex && showAnswer 
-                                ? flashcard.flashcard_content 
-                                : flashcard.heading}
-                            </p>
+                <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
+                  <CardHeader className="bg-purple-50 dark:bg-purple-900/30 border-b border-purple-100 dark:border-purple-800">
+                    <div className="flex justify-between items-center" ref={flashcardsHeaderRef}>
+                      <h2 className="text-2xl font-bold flex items-center">
+                        <Bookmark className="mr-2 h-5 w-5 text-purple-600" />
+                        Flashcards
+                      </h2>
+                      <div className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
+                        {currentFlashcardIndex + 1} of {currentLevel.flashcards.length}
+                      </div>
+                    </div>
+                  </CardHeader>
+                  
+                  <CardContent className="p-6">
+                    <div className="space-y-6">
+                      {isLoading ? (
+                        <div className="space-y-4">
+                          <Skeleton className="h-36 w-full rounded-lg" />
+                          <div className="flex justify-between">
+                            <Skeleton className="h-9 w-24" />
+                            <Skeleton className="h-9 w-28" />
+                            <Skeleton className="h-9 w-24" />
                           </div>
                         </div>
-                        {index === currentFlashcardIndex && (
-                          <div className="flex justify-between">
-                            <Button 
-                              variant="outline" 
-                              onClick={handlePrevFlashcard}
-                              disabled={currentFlashcardIndex === 0}
+                      ) : (
+                        <div>
+                          {currentLevel.flashcards.map((flashcard, index) => (
+                            <Card 
+                              key={`${flashcard.heading}-${index}`} 
+                              className={`p-6 bg-white dark:bg-gray-800 shadow-sm border transition-all duration-300 ${
+                                index === currentFlashcardIndex ? 'border-purple-500 dark:border-purple-400' : 'border-purple-100/50 dark:border-purple-900/50 hidden'
+                              }`}
+                              ref={el => flashcardRefs.current[index] = el}
                             >
-                              Previous
-                            </Button>
-                            <Button 
-                              variant="secondary"
-                              onClick={showAnswer ? () => setShowAnswer(false) : handleShowAnswer}
-                              className="min-w-24"
-                            >
-                              {showAnswer ? 'Hide Answer' : 'Show Answer'}
-                            </Button>
-                            <Button 
-                              onClick={handleNextFlashcard}
-                            >
-                              {currentFlashcardIndex < currentLevel.flashcards.length - 1 ? 'Next' : 'Continue to Questions'}
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    </Card>
-                  ))}
-                </div>
-                
-                {currentFlashcardIndex === currentLevel.flashcards.length - 1 && showAnswer && (
-                  <div className="mt-8 flex justify-center">
-                    <Button 
-                      onClick={() => {
-                        setProgressState('questions');
-                        setTimeout(() => {
-                          questionsHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 100);
-                      }}
-                      className="px-8"
-                    >
-                      Continue to Questions
-                      <ChevronDown className="ml-2 h-4 w-4" />
-                    </Button>
-                  </div>
-                )}
+                              <div className="min-h-[180px] flex flex-col">
+                                <div className="flex-1 mb-4">
+                                  <h3 className="text-lg font-medium mb-3 text-purple-700 dark:text-purple-300">
+                                    {index === currentFlashcardIndex && showAnswer ? "Answer:" : "Question:"}
+                                  </h3>
+                                  <div className="p-4 bg-purple-50 dark:bg-gray-700 rounded-lg">
+                                    <p className="text-lg">
+                                      {index === currentFlashcardIndex && showAnswer 
+                                        ? flashcard.flashcard_content 
+                                        : flashcard.heading}
+                                    </p>
+                                  </div>
+                                </div>
+                                {index === currentFlashcardIndex && (
+                                  <div className="flex justify-between">
+                                    <Button 
+                                      variant="outline" 
+                                      onClick={handlePrevFlashcard}
+                                      disabled={currentFlashcardIndex === 0}
+                                    >
+                                      Previous
+                                    </Button>
+                                    <Button 
+                                      variant="secondary"
+                                      onClick={showAnswer ? () => setShowAnswer(false) : handleShowAnswer}
+                                      className="min-w-24"
+                                    >
+                                      {showAnswer ? 'Hide Answer' : 'Show Answer'}
+                                    </Button>
+                                    <Button 
+                                      onClick={handleNextFlashcard}
+                                    >
+                                      {currentFlashcardIndex < currentLevel.flashcards.length - 1 ? 'Next' : 'Continue to Questions'}
+                                    </Button>
+                                  </div>
+                                )}
+                              </div>
+                            </Card>
+                          ))}
+                          
+                          {currentFlashcardIndex === currentLevel.flashcards.length - 1 && showAnswer && (
+                            <div className="mt-8 flex justify-center">
+                              <Button 
+                                onClick={() => {
+                                  setProgressState('questions');
+                                  setTimeout(() => {
+                                    questionsHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                  }, 100);
+                                }}
+                                className="px-8"
+                              >
+                                Continue to Questions
+                                <ChevronDown className="ml-2 h-4 w-4" />
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             )}
 
             {/* Questions Section - Only shown after flashcards */}
-            {(progressState === 'questions' || progressState === 'completed') && currentLevel.assessment_questions.length > 0 && (
+            {(progressState === 'questions' || progressState === 'completed') && currentLevel.assessment_questions && currentLevel.assessment_questions.length > 0 && (
               <div className="mb-8">
-                <div className="flex justify-between items-center mb-4" ref={questionsHeaderRef}>
-                  <h2 className="text-2xl font-bold">Questions</h2>
-                  <div className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
-                    {completionStatus} completed
-                  </div>
-                </div>
+                <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
+                  <CardHeader className="bg-purple-50 dark:bg-purple-900/30 border-b border-purple-100 dark:border-purple-800">
+                    <div className="flex justify-between items-center" ref={questionsHeaderRef}>
+                      <h2 className="text-2xl font-bold flex items-center">
+                        <CheckCircle className="mr-2 h-5 w-5 text-purple-600" />
+                        Assessment Questions
+                      </h2>
+                      <div className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
+                        {completionStatus} completed
+                      </div>
+                    </div>
+                  </CardHeader>
                 
-                <div className="space-y-6">
-                  {currentLevel.assessment_questions.map((q, index) => {
-                    // Only show questions up to the first unanswered one for MCQ
-                    const previousQuestionsAnswered = index === 0 || 
-                      Object.keys(answeredQuestions).includes(
-                        currentLevel.assessment_questions[index - 1].id
-                      );
-                    
-                    // For MCQ, enforce sequential answering
-                    if (q.type === 'MCQ' && !previousQuestionsAnswered && !answeredQuestions[q.id]) {
-                      return null;
-                    }
-                    
-                    // Show question type indicator
-                    const questionTypeLabel = q.type === 'MCQ' 
-                      ? 'Select one answer' 
-                      : 'Select all that apply';
-                    
-                    // For MCQ, check if this question is answered
-                    const isQuestionAnswered = answeredQuestions[q.id]?.length > 0;
-                    
-                    // For MAQ, get the currently selected answers
-                    const selectedAnswers = answeredQuestions[q.id] || [];
-
-                    return (
-                      <Card 
-                        key={q.id} 
-                        className={`p-6 bg-white dark:bg-gray-800 shadow-md transition-all duration-300 ${
-                          isQuestionAnswered ? 'border-l-4 border-purple-500' : ''
-                        }`}
-                        ref={el => questionRefs.current[index] = el}
-                      >
-                        <div className="flex justify-between items-start mb-2">
-                          <span className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                            {q.concept_focus}
-                          </span>
-                          <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
-                            {questionTypeLabel}
-                          </span>
-                        </div>
-                        <h3 className="text-lg font-medium mb-4">{q.question_text}</h3>
+                  <CardContent className="p-6">
+                    {isLoading ? (
+                      <div className="space-y-6">
                         <div className="space-y-2">
-                          {q.options.map((option) => {
-                            // For MCQ, button is selected if it's the answer
-                            // For MAQ, button is selected if it's in the answers array
-                            const isSelected = q.type === 'MCQ' 
-                              ? answeredQuestions[q.id]?.[0] === option 
-                              : selectedAnswers.includes(option);
-                            
-                            // For MCQ, disable all options once answered
-                            // For MAQ, never disable options
-                            const isDisabled = q.type === 'MCQ' && isQuestionAnswered;
-                            
-                            return (
-                              <Button
-                                key={option}
-                                variant={isSelected ? "default" : "outline"}
-                                className="w-full justify-start text-left"
-                                onClick={() => handleAnswerQuestion(q.id, option, index, q.type)}
-                                disabled={isDisabled}
-                              >
-                                {option}
-                              </Button>
-                            );
-                          })}
+                          <div className="flex justify-between items-start">
+                            <Skeleton className="h-4 w-1/3" />
+                            <Skeleton className="h-4 w-24" />
+                          </div>
+                          <Skeleton className="h-6 w-5/6" />
+                          <div className="space-y-2 pt-2">
+                            <Skeleton className="h-10 w-full" />
+                            <Skeleton className="h-10 w-full" />
+                            <Skeleton className="h-10 w-full" />
+                            <Skeleton className="h-10 w-full" />
+                          </div>
                         </div>
-                      </Card>
-                    );
-                  })}
+                      </div>
+                    ) : (
+                      <div className="space-y-6">
+                        {currentLevel.assessment_questions.map((q, index) => {
+                          // Only show questions up to the first unanswered one for MCQ
+                          const previousQuestionsAnswered = index === 0 || 
+                            Object.keys(answeredQuestions).includes(
+                              currentLevel.assessment_questions[index - 1].id
+                            );
+                          
+                          // For MCQ, enforce sequential answering
+                          if (q.type === 'MCQ' && !previousQuestionsAnswered && !answeredQuestions[q.id]) {
+                            return null;
+                          }
+                          
+                          // Show question type indicator
+                          const questionTypeLabel = q.type === 'MCQ' 
+                            ? 'Select one answer' 
+                            : 'Select all that apply';
+                          
+                          // For MCQ, check if this question is answered
+                          const isQuestionAnswered = answeredQuestions[q.id]?.length > 0;
+                          
+                          // For MAQ, get the currently selected answers
+                          const selectedAnswers = answeredQuestions[q.id] || [];
+
+                          return (
+                            <Card 
+                              key={q.id} 
+                              className={`bg-white dark:bg-gray-800 shadow-sm border transition-all duration-300 ${
+                                isQuestionAnswered ? 'border-l-4 border-purple-500' : ''
+                              }`}
+                              ref={el => questionRefs.current[index] = el}
+                            >
+                              <CardContent className="p-4">
+                                <div className="flex justify-between items-start mb-2">
+                                  <span className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                                    {q.concept_focus}
+                                  </span>
+                                  <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                                    {questionTypeLabel}
+                                  </span>
+                                </div>
+                                <h3 className="text-lg font-medium mb-4">{q.question_text}</h3>
+                                <div className="space-y-2">
+                                  {q.options.map((option) => {
+                                    // For MCQ, button is selected if it's the answer
+                                    // For MAQ, button is selected if it's in the answers array
+                                    const isSelected = q.type === 'MCQ' 
+                                      ? answeredQuestions[q.id]?.[0] === option 
+                                      : selectedAnswers.includes(option);
+                                    
+                                    // For MCQ, disable all options once answered
+                                    // For MAQ, never disable options
+                                    const isDisabled = q.type === 'MCQ' && isQuestionAnswered;
+                                    
+                                    return (
+                                      <Button
+                                        key={option}
+                                        variant={isSelected ? "default" : "outline"}
+                                        className="w-full justify-start text-left"
+                                        onClick={() => handleAnswerQuestion(q.id, option, index, q.type)}
+                                        disabled={isDisabled}
+                                      >
+                                        {option}
+                                      </Button>
+                                    );
+                                  })}
+                                </div>
+                              </CardContent>
+                            </Card>
+                          );
+                        })}
+
+                        {/* Show next level button when all questions are answered */}
+                        {allQuestionsAnswered && (
+                          <div className="mt-8 flex justify-center">
+                            <Button 
+                              onClick={handleSubmitAnswers} 
+                              className="px-8"
+                              disabled={isLoading}
+                            >
+                              {isLoading ? (
+                                <>
+                                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                  Submitting...
+                                </>
+                              ) : (
+                                <>
+                                  Submit & Continue
+                                  <ChevronRight className="ml-2 h-4 w-4" />
+                                </>
+                              )}
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+            
+            {/* Final Assignment Upload - Only shown in Level 5 when completed */}
+            {parseInt(levelId) === 5 && progressState === 'completed' && (
+              <div className="mb-8">
+                <div className="p-4 bg-green-50 dark:bg-green-900/20 mb-6 rounded-lg">
+                  <h3 className="text-lg font-medium text-green-800 dark:text-green-300 flex items-center">
+                    <CheckCircle className="mr-2 h-5 w-5" />
+                    Congratulations on completing the Mastery level!
+                  </h3>
+                  <p className="mt-2 text-green-700 dark:text-green-400">
+                    You've mastered the concepts covered in this assignment. Upload your completed assignment to get a comprehensive final review and personalized feedback.
+                  </p>
                 </div>
                 
-                {/* Show next level button when all questions are answered */}
-                {allQuestionsAnswered && (
-                  <div className="mt-8 flex justify-center">
-                    <Button 
-                      onClick={handleSubmitAnswers} 
-                      className="px-8"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Submitting...
-                        </>
-                      ) : (
-                        <>
-                          Submit & Continue
-                          <ChevronRight className="ml-2 h-4 w-4" />
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                )}
+                <AnswersUpload onUploadComplete={handleAnswersDocumentUpload} />
               </div>
             )}
           </div>

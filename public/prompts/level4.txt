@@ -1,0 +1,54 @@
+Level 4: Practical Application Prompt
+CopyHere are my answers to the Level 3 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my understanding of both concepts and their integration
+2. Provide detailed real-world application scenarios
+3. Create practical, scenario-based questions that simulate actual assignment problems
+4. These should be complex enough to prepare me for the final assignment
+5. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_4_PRACTICAL_APPLICATION",
+  
+  "feedback_md": "# Feedback on Level 3 Assessment\n\n[Your detailed markdown feedback on concept integration understanding]",
+  
+  "main_content_md": "# Practical Applications and Case Studies\n\n[Comprehensive markdown content with real-world examples, case studies, and practical applications of all concepts]",
+  
+  "flashcards": [
+    {
+      "heading": "Case Study 1",
+      "flashcard_content": "Brief overview of a real-world application scenario"
+    },
+    {
+      "heading": "Problem-Solving Framework",
+      "flashcard_content": "Step-by-step approach to solving real assignment problems using these concepts"
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_application_level4",
+      "concept_focus": "Practical Application",
+      "type": "MCQ",
+      "question_text": "Complex scenario-based question similar to the actual assignment?",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correct_answers": ["Option B"]
+    },
+    {
+      "id": "q2_application_level4",
+      "concept_focus": "Practical Application",
+      "type": "MAQ",
+      "question_text": "Another complex scenario requiring application of multiple concepts? Select all that apply.",
+      "options": ["Option W", "Option X", "Option Y", "Option Z"],
+      "correct_answers": ["Option W", "Option Y", "Option Z"]
+    }
+    // 1-2 more application-focused questions
+  ]
+}

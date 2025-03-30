@@ -1,69 +1,69 @@
-# Welcome to your Lovable project
+# AdaptEdge Assignment Helper
 
-## Project info
+An interactive learning application that helps students master assignments through guided, adaptive learning experiences.
 
-**URL**: https://lovable.dev/projects/ef25d9f9-9ebf-4fc5-bce1-4c25b2c2fd18
+## New Feature: Gemini API Integration
 
-## How can I edit this code?
+The application now supports direct API calls to Google's Gemini AI from the frontend. This lets users get AI-powered responses for their assignments without requiring a backend server.
 
-There are several ways of editing your application.
+### How It Works
 
-**Use Lovable**
+1. The app uses pre-built prompts stored in the `public/prompts/` folder
+2. These prompts are organized by levels (0-5), each providing different depths of assistance:
+   - Level 0: Assignment Overview
+   - Level 1: Basic Understanding
+   - Level 2: Advanced Understanding
+   - Level 3: Practical Application
+   - Level 4: Expert Implementation
+   - Level 5: Mastery
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ef25d9f9-9ebf-4fc5-bce1-4c25b2c2fd18) and start prompting.
+3. When a user uploads assignment PDFs and helper materials, the app sends these directly to the Gemini API along with the appropriate level-specific prompt.
 
-Changes made via Lovable will be committed automatically to this repo.
+4. The response from Gemini is then processed and displayed in a structured format including:
+   - Main content
+   - Flashcards
+   - Assessment questions
 
-**Use your preferred IDE**
+### Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+To use this feature, you need to:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Get a Gemini API key from the [Google AI Studio](https://ai.google.dev/)
+2. Create a `.env` file in the project root with:
+   ```
+   VITE_GEMINI_API_KEY=your_api_key_here
+   VITE_USE_MOCK_DATA=false
+   VITE_MAX_UPLOAD_SIZE_MB=10
+   VITE_ALLOWED_FILE_TYPES=.pdf,.doc,.docx,.txt,.rtf,.ppt,.pptx
+   ```
+3. Install dependencies:
+   ```
+   npm install
+   ```
+4. Run the development server:
+   ```
+   npm run dev
+   ```
 
-Follow these steps:
+### Customizing Prompts
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+You can customize how the AI responds by editing the prompt files in the `public/prompts/` directory:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- `level0.txt` - Assignment overview prompt
+- `level1.txt` - Basic understanding prompt
+- ...and so on
 
-# Step 3: Install the necessary dependencies.
-npm i
+Each prompt file contains instructions that tell Gemini how to structure its response for that specific learning level.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## Development
 
-**Edit a file directly in GitHub**
+If you don't have a Gemini API key, the application will fall back to using mock data in development mode. Set `VITE_USE_MOCK_DATA=true` in your `.env` file to enable this behavior.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Technologies
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
 - React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/ef25d9f9-9ebf-4fc5-bce1-4c25b2c2fd18) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+- TypeScript
+- Vite
+- Google Generative AI SDK
+- TailwindCSS
+- Shadcn UI Components

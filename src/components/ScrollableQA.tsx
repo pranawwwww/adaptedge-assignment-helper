@@ -1,12 +1,14 @@
-
-import { useState, useEffect } from "react";
-import { Check, X, ChevronRight } from "lucide-react";
+import { useState, useEffect, Suspense, lazy } from "react";
+import { Check, X, ChevronRight, MessageSquareQuote } from "lucide-react";
+// Lazy load ReactMarkdown to improve initial load time
+const ReactMarkdown = lazy(() => import('react-markdown'));
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Question {
   id: number;
@@ -27,16 +29,17 @@ interface ScrollableQAProps {
   flashcardContents: FlashcardContent[];
   questions: Question[];
   onComplete: (score: number) => void;
+  feedback_md?: string; // Feedback markdown content from LLM response
 }
 
-const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQAProps) => {
+const ScrollableQA = ({ flashcardContents, questions, onComplete, feedback_md }: ScrollableQAProps) => {
   const { toast } = useToast();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
   const [showMCQ, setShowMCQ] = useState<Record<number, boolean>>({});
   const [feedback, setFeedback] = useState<Record<number, { correct: boolean; message: string }>>({});
   const [completedQuestions, setCompletedQuestions] = useState<number[]>([]);
-  
+
   // Track learning phase completion
   const [learningPhaseComplete, setLearningPhaseComplete] = useState(false);
   const [viewedFlashcards, setViewedFlashcards] = useState<number[]>([]);
@@ -63,7 +66,7 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
 
   // Find the current flashcard and its related question
   const currentFlashcard = flashcardContents[currentIndex];
-  
+
   // Get current test question based on phase
   const getCurrentQuestion = () => {
     if (currentPhase === "learning") {
@@ -72,7 +75,7 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
       return currentTestIndex < questions.length ? questions[currentTestIndex] : null;
     }
   };
-  
+
   const currentQuestion = getCurrentQuestion();
 
   const handleAnswerSubmit = (questionId: number, answer: string) => {
@@ -84,22 +87,22 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
 
     // Check if answer is correct
     const isCorrect = answer.toLowerCase().includes(question.answer.toLowerCase());
-    
+
     if (isCorrect) {
       // Feedback for correct answer
       setFeedback(prev => ({
         ...prev,
-        [questionId]: { 
-          correct: true, 
-          message: "Correct! Well done." 
+        [questionId]: {
+          correct: true,
+          message: "Correct! Well done."
         }
       }));
-      
+
       // Mark question as completed
       if (!completedQuestions.includes(questionId)) {
         setCompletedQuestions(prev => [...prev, questionId]);
       }
-      
+
       // Move to the next item after a delay
       setTimeout(() => {
         if (currentPhase === "learning") {
@@ -131,12 +134,12 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
       // Feedback for incorrect answer
       setFeedback(prev => ({
         ...prev,
-        [questionId]: { 
-          correct: false, 
-          message: `Incorrect. ${question.explanation}` 
+        [questionId]: {
+          correct: false,
+          message: `Incorrect. ${question.explanation}`
         }
       }));
-      
+
       // Show MCQ options for this question
       setShowMCQ(prev => ({ ...prev, [questionId]: true }));
     }
@@ -149,7 +152,7 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
   const handleNextFlashcard = () => {
     if (currentIndex < flashcardContents.length - 1) {
       setCurrentIndex(prev => prev + 1);
-      
+
       // Add next flashcard to viewed cards
       if (!viewedFlashcards.includes(flashcardContents[currentIndex + 1].id)) {
         setViewedFlashcards(prev => [...prev, flashcardContents[currentIndex + 1].id]);
@@ -167,7 +170,7 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
   // Generate MCQ options for a question
   const getMCQOptions = (question: Question) => {
     if (question.options) return question.options;
-    
+
     // Create default options if none provided
     const correctAnswer = question.answer;
     const distractors = [
@@ -175,12 +178,12 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
       `Alternative to ${correctAnswer}`,
       `Opposite of ${correctAnswer}`
     ];
-    
+
     return [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
   };
 
   // Calculate progress percentage based on current phase
-  const progressPercentage = currentPhase === "learning" 
+  const progressPercentage = currentPhase === "learning"
     ? (viewedFlashcards.length / flashcardContents.length) * 100
     : (completedQuestions.length / questions.length) * 100;
 
@@ -189,7 +192,7 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
       <div className="mb-4 px-6 pt-6">
         <div className="flex justify-between mb-2">
           <span>
-            {currentPhase === "learning" 
+            {currentPhase === "learning"
               ? `Learning Phase: ${viewedFlashcards.length} of ${flashcardContents.length} concepts reviewed`
               : `Testing Phase: ${completedQuestions.length} of ${questions.length} questions completed`
             }
@@ -197,13 +200,13 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
           <span>Progress: {progressPercentage.toFixed(0)}%</span>
         </div>
         <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div 
+          <div
             className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-500"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
       </div>
-      
+
       <ScrollArea className="h-[500px] px-6 pb-6">
         <div className="space-y-6">
           {currentPhase === "learning" ? (
@@ -216,7 +219,7 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
                     <p>{currentFlashcard.content}</p>
                   </div>
                   <div className="mt-6 text-right">
-                    <Button 
+                    <Button
                       onClick={handleNextFlashcard}
                       className="rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
                     >
@@ -236,11 +239,11 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
               <div className="animate-fade-in">
                 <Card className="p-6 border-purple-100 dark:border-purple-900/30">
                   <h3 className="text-xl font-bold mb-4">{currentQuestion.question}</h3>
-                  
+
                   {/* Feedback */}
                   {feedback[currentQuestion.id] && (
                     <div className={`mb-6 p-4 rounded-lg ${
-                      feedback[currentQuestion.id].correct 
+                      feedback[currentQuestion.id].correct
                         ? 'bg-green-50 dark:bg-green-900/20 border border-green-200'
                         : 'bg-red-50 dark:bg-red-900/20 border border-red-200'
                     }`}>
@@ -257,12 +260,12 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
                       <p className="text-sm">{feedback[currentQuestion.id].message}</p>
                     </div>
                   )}
-                  
+
                   {/* MCQ options if answer was wrong */}
                   {showMCQ[currentQuestion.id] ? (
                     <div className="mt-4">
                       <h4 className="font-medium mb-2">Select the correct answer:</h4>
-                      <RadioGroup 
+                      <RadioGroup
                         defaultValue={userAnswers[currentQuestion.id]}
                         onValueChange={(value) => handleMCQSelection(currentQuestion.id, value)}
                         className="space-y-2"
@@ -286,9 +289,9 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
                         className="w-full p-3 border border-purple-100 dark:border-purple-900/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary bg-white/70 dark:bg-gray-800/70"
                         disabled={!!feedback[currentQuestion.id]?.correct}
                       />
-                      
+
                       <div className="mt-4 flex justify-end">
-                        <Button 
+                        <Button
                           onClick={() => handleAnswerSubmit(currentQuestion.id, userAnswers[currentQuestion.id] || '')}
                           disabled={!userAnswers[currentQuestion.id] || !!feedback[currentQuestion.id]?.correct}
                           className="rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
@@ -304,6 +307,20 @@ const ScrollableQA = ({ flashcardContents, questions, onComplete }: ScrollableQA
           )}
         </div>
       </ScrollArea>
+      {feedback_md && (
+        <div className="px-6 pb-6">
+          <Card>
+            <CardHeader>
+              <h3 className="text-lg font-medium">Feedback</h3>
+            </CardHeader>
+            <CardContent>
+              <Suspense fallback={<Skeleton className="h-4 w-full" />}>
+                <ReactMarkdown>{feedback_md}</ReactMarkdown>
+              </Suspense>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </Card>
   );
 };

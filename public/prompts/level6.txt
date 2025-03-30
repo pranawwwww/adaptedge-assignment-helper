@@ -1,0 +1,44 @@
+Final Review Level Prompt
+---
+
+I've completed the assignment and uploaded my solution document. 
+Please evaluate my work and provide comprehensive feedback based on the following structure:
+
+[The content below is my submitted answers document]
+
+{{ANSWERS_DOCUMENT}}
+
+Based on my solution, please provide a detailed evaluation and feedback, following this structure:
+
+Return ONLY this JSON structure:
+
+{
+  "status": "FINAL_REVIEW",
+  
+  "main_content_md": "# Final Review and Evaluation\n\n[Comprehensive review and evaluation of the submitted assignment with detailed feedback on what was done well and areas for improvement]",
+  
+  "grade_assessment_md": "# Grade Assessment\n\n[Assessment of how well the submission meets the requirements, potentially including a score or letter grade with justification]",
+  
+  "improvement_points_md": "# Areas for Improvement\n\n[Specific areas where the submission could be improved, with concrete suggestions]",
+  
+  "exemplary_points_md": "# Exemplary Aspects\n\n[Highlights of particularly well-executed parts of the submission]",
+  
+  "feedback_md": "# Overall Feedback\n\n[Summary feedback and encouragement for future work]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Learning Point 1",
+      "flashcard_content": "Important concept from the assignment and how it was applied"
+    },
+    {
+      "heading": "Key Learning Point 2",
+      "flashcard_content": "Another important concept from the assignment and how it was applied"
+    },
+    {
+      "heading": "Future Application",
+      "flashcard_content": "How these concepts can be applied in future assignments or real-world scenarios"
+    }
+  ],
+  
+  "assessment_questions": []
+}

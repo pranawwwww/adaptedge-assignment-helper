@@ -1,0 +1,55 @@
+Level 1: Feedback & Progressive Learning Prompt
+CopyHere are my answers to the Level 0 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my understanding
+2. Provide detailed feedback on what I got right and wrong
+3. Explain the correct answers with references to the key concept
+4. Provide more in-depth content about the concept I'm learning
+5. Create new, slightly more challenging questions
+6. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_1_FEEDBACK_AND_PROGRESSION",
+  
+  "feedback_md": "# Feedback on Level 0 Assessment\n\n[Your detailed markdown feedback explaining what was correct/incorrect and why]",
+  
+  "main_content_md": "# Key Concept 1: Deeper Exploration\n\n[More detailed markdown explanation of the concept, including examples, applications, etc.]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 1 - Advanced Aspect",
+      "flashcard_content": "More nuanced explanation focusing on a specific aspect of concept 1"
+    },
+    {
+      "heading": "Key Concept 1 - Application",
+      "flashcard_content": "How to apply concept 1 in practical scenarios"
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_concept1_level1",
+      "concept_focus": "Key Concept 1",
+      "type": "MCQ",
+      "question_text": "More challenging question about concept 1?",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correct_answers": ["Option C"]
+    },
+    {
+      "id": "q2_concept1_level1",
+      "concept_focus": "Key Concept 1",
+      "type": "MAQ",
+      "question_text": "Another challenging question about concept 1? Select all that apply.",
+      "options": ["Option W", "Option X", "Option Y", "Option Z"],
+      "correct_answers": ["Option X", "Option Z"]
+    }
+    // 1-2 more challenging questions
+  ]
+}

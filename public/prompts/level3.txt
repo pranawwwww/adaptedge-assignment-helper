@@ -1,0 +1,54 @@
+Level 3: Integration with Other Concepts Prompt
+CopyHere are my answers to the Level 2 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my advanced understanding
+2. Show how this concept integrates with the next key concept from the original overview
+3. Provide content on the relationships and interactions between these concepts
+4. Create questions that require understanding both concepts together
+5. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_3_CONCEPT_INTEGRATION",
+  
+  "feedback_md": "# Feedback on Level 2 Assessment\n\n[Your detailed markdown feedback on advanced understanding]",
+  
+  "main_content_md": "# Integration of Key Concept 1 and Key Concept 2\n\n[Comprehensive markdown explanation showing how the concepts work together, including examples of their interaction]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 2 - Fundamentals",
+      "flashcard_content": "Basic explanation of the second key concept"
+    },
+    {
+      "heading": "Concepts 1 & 2 Integration",
+      "flashcard_content": "How these concepts interact and complement each other"
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_concept2_level3",
+      "concept_focus": "Key Concept 2",
+      "type": "MCQ",
+      "question_text": "Basic question about the new concept 2?",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correct_answers": ["Option D"]
+    },
+    {
+      "id": "q2_integration_level3",
+      "concept_focus": "Concepts 1 & 2 Integration",
+      "type": "MAQ",
+      "question_text": "Question requiring understanding of how both concepts interact? Select all that apply.",
+      "options": ["Option W", "Option X", "Option Y", "Option Z"],
+      "correct_answers": ["Option X", "Option Y"]
+    }
+    // 1-2 more integration questions
+  ]
+}

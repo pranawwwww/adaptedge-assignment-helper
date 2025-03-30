@@ -92,6 +92,44 @@ const Upload = () => {
     setIsUploading(true);
     
     try {
+      console.log("🧹 CLEARING ALL PREVIOUS DATA FOR NEW ASSIGNMENT");
+      
+      // Clear all previous chat memory and level data from session storage
+      console.log("Clearing previous chat memory and level data...");
+      
+      // Clear previous level data and responses
+      sessionStorage.removeItem('previousLevelResponses');
+      sessionStorage.removeItem('currentLevelData');
+      sessionStorage.removeItem('previousQuestions');
+      sessionStorage.removeItem('answeredQuestions');
+      
+      // Also clear any conversation history
+      sessionStorage.removeItem('chatHistory');
+      sessionStorage.removeItem('conversationContext');
+      
+      // Clear specifically flashcard related data
+      sessionStorage.removeItem('flashcards');
+      sessionStorage.removeItem('flashcardProgress');
+      sessionStorage.removeItem('completedFlashcards');
+      localStorage.removeItem('savedFlashcards');
+      
+      // Clear level-specific data for all levels (0-5)
+      for (let level = 0; level <= 5; level++) {
+        sessionStorage.removeItem(`level${level}_data`);
+        sessionStorage.removeItem(`level${level}_progress`);
+        sessionStorage.removeItem(`level${level}_questions`);
+        sessionStorage.removeItem(`level${level}_answers`);
+        console.log(`Cleared data for level ${level}`);
+      }
+      
+      // Clear any other potential stored data
+      sessionStorage.removeItem('currentAssignment');
+      sessionStorage.removeItem('lastAccessedLevel');
+      localStorage.removeItem('userProgress');
+      localStorage.removeItem('completedLevels');
+      
+      console.log("✅ ALL PREVIOUS DATA CLEARED FOR NEW ASSIGNMENT");
+      
       // Process files for API
       const allFiles = [assignmentFile, ...studyMaterials];
       console.log("Files to process:", allFiles.map(f => ({ name: f.name, size: f.size, type: f.type })));

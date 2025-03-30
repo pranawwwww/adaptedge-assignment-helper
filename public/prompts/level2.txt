@@ -1,0 +1,54 @@
+Level 2: Advanced Concept Understanding Prompt
+CopyHere are my answers to the Level 1 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my understanding at this more challenging level
+2. Provide detailed feedback emphasizing nuances I may have missed
+3. Introduce more advanced aspects of the concept
+4. Create new questions that require deeper analysis and application
+5. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_2_ADVANCED_UNDERSTANDING",
+  
+  "feedback_md": "# Feedback on Level 1 Assessment\n\n[Your detailed markdown feedback with emphasis on nuances and deeper understanding]",
+  
+  "main_content_md": "# Key Concept 1: Advanced Applications\n\n[Comprehensive markdown explanation including advanced use cases, edge cases, best practices, etc.]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 1 - Edge Cases",
+      "flashcard_content": "Explanation of edge cases and special considerations for concept 1"
+    },
+    {
+      "heading": "Key Concept 1 - Advanced Techniques",
+      "flashcard_content": "Description of advanced techniques related to concept 1"
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_concept1_level2",
+      "concept_focus": "Key Concept 1",
+      "type": "MCQ",
+      "question_text": "Complex question requiring deep understanding of concept 1?",
+      "options": ["Option A", "Option B", "Option C", "Option D"],
+      "correct_answers": ["Option A"]
+    },
+    {
+      "id": "q2_concept1_level2",
+      "concept_focus": "Key Concept 1",
+      "type": "MAQ",
+      "question_text": "Scenario-based question applying concept 1? Select all that apply.",
+      "options": ["Option W", "Option X", "Option Y", "Option Z"],
+      "correct_answers": ["Option W", "Option X", "Option Z"]
+    }
+    // 1-2 more advanced application questions
+  ]
+}
