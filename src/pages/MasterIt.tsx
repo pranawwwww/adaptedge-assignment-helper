@@ -592,7 +592,7 @@ const MasterIt = () => {
                     </div>
                   ) : (
                     /* Enhanced markdown rendering with custom components */
-                    <div className="prose dark:prose-invert max-w-none prose-headings:text-purple-900 dark:prose-headings:text-purple-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">
+                    <div className="prose dark:prose-invert max-w-none prose-headings:text-purple-900 dark:prose-headings:text-purple-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-p:leading-relaxed">
                       <Suspense fallback={
                         <div className="animate-pulse space-y-3">
                           <div className="h-6 bg-purple-100 dark:bg-purple-900/30 rounded w-3/4"></div>
@@ -612,14 +612,18 @@ const MasterIt = () => {
                   )}
                   
                   {/* Continue button */}
-                  {!isLoading && (
-                    <div className="mt-8 flex justify-center">
+                  {!isLoading && progressState === 'reading' && (
+                    <div className="mt-8 flex flex-col items-center">
+                      <div className="mb-4 flex gap-2 items-center text-sm text-purple-600 dark:text-purple-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        Scroll down to continue
+                      </div>
                       <Button 
                         onClick={handleContinueToFlashcards} 
-                        className="px-8"
+                        className="px-8 group"
                       >
                         Continue to Flashcards
-                        <ChevronDown className="ml-2 h-4 w-4" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform"><path d="m6 9 6 6 6-6"/></svg>
                       </Button>
                     </div>
                   )}
@@ -665,52 +669,67 @@ const MasterIt = () => {
                               ref={el => flashcardRefs.current[index] = el}
                             >
                               <div className="min-h-[180px] flex flex-col">
-                                <div className="flex-1 mb-4">
-                                  <h3 className="text-lg font-medium mb-3 text-purple-700 dark:text-purple-300">
+                                <div className="flex-1 mb-6">
+                                  <h3 className="text-xl font-semibold mb-4 text-purple-700 dark:text-purple-300">
                                     {flashcard.heading}
                                   </h3>
-                                  <div className="p-4 bg-purple-50 dark:bg-gray-700 rounded-lg">
-                                    <p className="text-lg">
+                                  <div className="p-5 bg-purple-50 dark:bg-gray-700 rounded-lg border border-purple-100 dark:border-purple-800 shadow-inner">
+                                    <p className="text-lg leading-relaxed">
                                       {flashcard.flashcard_content}
                                     </p>
                                   </div>
                                 </div>
                                 {index === currentFlashcardIndex && (
-                                  <div className="flex justify-between">
+                                  <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
                                     <Button 
                                       variant="outline" 
                                       onClick={handlePrevFlashcard}
                                       disabled={currentFlashcardIndex === 0}
+                                      className="flex items-center"
                                     >
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="m15 18-6-6 6-6"/></svg>
                                       Previous
                                     </Button>
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                                      {currentFlashcardIndex + 1} / {currentLevel.flashcards.length}
+                                    </div>
                                     <Button 
                                       onClick={handleNextFlashcard}
+                                      className="flex items-center"
                                     >
-                                      {currentFlashcardIndex < currentLevel.flashcards.length - 1 ? 'Next' : 'Continue to Questions'}
+                                      {currentFlashcardIndex < currentLevel.flashcards.length - 1 ? (
+                                        <>
+                                          Next
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m9 18 6-6-6-6"/></svg>
+                                        </>
+                                      ) : (
+                                        <>
+                                          Continue to Questions
+                                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m6 9 6 6 6-6"/></svg>
+                                        </>
+                                      )}
                                     </Button>
                                   </div>
                                 )}
                               </div>
+                              
+                              {/* Visual progress indicator */}
+                              <div className="mt-4 flex gap-1.5 justify-center">
+                                {currentLevel.flashcards.map((_, i) => (
+                                  <div 
+                                    key={i} 
+                                    className={`h-1.5 rounded-full transition-all ${
+                                      i === currentFlashcardIndex 
+                                        ? 'w-6 bg-purple-600 dark:bg-purple-400' 
+                                        : i < currentFlashcardIndex 
+                                          ? 'w-3 bg-purple-300 dark:bg-purple-700' 
+                                          : 'w-3 bg-gray-200 dark:bg-gray-700'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
                             </Card>
                           ))}
-                          
-                          {currentFlashcardIndex === currentLevel.flashcards.length - 1 && showAnswer && (
-                            <div className="mt-8 flex justify-center">
-                              <Button 
-                                onClick={() => {
-                                  setProgressState('questions');
-                                  setTimeout(() => {
-                                    questionsHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                  }, 100);
-                                }}
-                                className="px-8"
-                              >
-                                Continue to Questions
-                                <ChevronDown className="ml-2 h-4 w-4" />
-                              </Button>
-                            </div>
-                          )}
                         </div>
                       )}
                     </div>
@@ -781,21 +800,24 @@ const MasterIt = () => {
                             <Card 
                               key={q.id} 
                               className={`bg-white dark:bg-gray-800 shadow-sm border transition-all duration-300 ${
-                                isQuestionAnswered ? 'border-l-4 border-purple-500' : ''
+                                isQuestionAnswered ? 'border-l-4 border-purple-500' : 'border-l border-gray-200 dark:border-gray-700'
                               }`}
                               ref={el => questionRefs.current[index] = el}
                             >
-                              <CardContent className="p-4">
-                                <div className="flex justify-between items-start mb-2">
-                                  <span className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                                    {q.concept_focus}
+                              <CardContent className="p-6">
+                                <div className="flex justify-between items-start mb-3">
+                                  <span className="text-sm font-medium text-purple-600 dark:text-purple-400 mb-2">
+                                    Question {index + 1}
                                   </span>
-                                  <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">
+                                  <span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
                                     {questionTypeLabel}
                                   </span>
                                 </div>
                                 <h3 className="text-lg font-medium mb-4">{q.question_text}</h3>
-                                <div className="space-y-2">
+                                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                  {q.concept_focus}
+                                </p>
+                                <div className="space-y-2.5">
                                   {q.options.map((option) => {
                                     // For MCQ, button is selected if it's the answer
                                     // For MAQ, button is selected if it's in the answers array
@@ -805,17 +827,34 @@ const MasterIt = () => {
                                     
                                     // For MCQ, disable all options once answered
                                     // For MAQ, never disable options
-                                    const isDisabled = q.type === 'MCQ' && isQuestionAnswered;
+                                    const isDisabled = q.type === 'MCQ' && isQuestionAnswered && !isSelected;
                                     
                                     return (
                                       <Button
                                         key={option}
                                         variant={isSelected ? "default" : "outline"}
-                                        className="w-full justify-start text-left"
+                                        className={`w-full justify-start text-left h-auto py-3 px-4 ${
+                                          isSelected 
+                                            ? 'bg-purple-100 hover:bg-purple-200 text-purple-800 border-purple-300 dark:bg-purple-900/60 dark:border-purple-700 dark:text-purple-200' 
+                                            : ''
+                                        }`}
                                         onClick={() => handleAnswerQuestion(q.id, option, index, q.type)}
                                         disabled={isDisabled}
                                       >
-                                        {option}
+                                        <div className="flex items-center">
+                                          <div className={`w-5 h-5 rounded-full flex-shrink-0 border transition-colors mr-3 ${
+                                            isSelected 
+                                              ? 'bg-purple-600 border-purple-700 dark:bg-purple-500 dark:border-purple-400'
+                                              : 'border-gray-300 dark:border-gray-600'
+                                          }`}>
+                                            {isSelected && (
+                                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="w-5 h-5">
+                                                <path fillRule="evenodd" d="M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z" clipRule="evenodd" />
+                                              </svg>
+                                            )}
+                                          </div>
+                                          <span>{option}</span>
+                                        </div>
                                       </Button>
                                     );
                                   })}
