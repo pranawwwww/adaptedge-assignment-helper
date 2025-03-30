@@ -1,0 +1,25 @@
+Answers to Multiple Choice Questions
+
+My answer: B) 12 m/s²
+Explanation: I converted 60 km/h to 16.67 m/s and divided by 5 seconds: 16.67/5 = 3.33 m/s². But I miscalculated and selected B.
+My answer: D) Displacement
+Explanation: Displacement has both magnitude and direction, making it a vector quantity.
+My answer: C) 29.4 m/s
+Explanation: Using v = g × t = 9.8 × 3 = 29.4 m/s
+My answer: B) 4 m/s²
+Explanation: Using F = ma, I rearranged to find a = F/m = 200/50 = 4 m/s²
+My answer: B) 5 N
+Explanation: Using the Pythagorean theorem: √(3² + 4²) = √(9 + 16) = √25 = 5 N
+My answer: B) Joule
+Explanation: The joule (J) is the SI unit of energy, work, and heat.
+My answer: C) 20 m
+Explanation: Using v² = u² + 2as, with v = 0 at the highest point: 0 = 19.6² - 2(9.8)h, solving for h gives 19.6²/(2×9.8) = 19.6 m, which I rounded to 20 m.
+My answer: B) 2 m/s
+Explanation: Using conservation of momentum: m₁v₁ + m₂v₂ = (m₁ + m₂)v
+2 × 5 + 3 × 0 = (2 + 3)v
+10 = 5v
+v = 2 m/s
+My answer: D) 9
+Explanation: I thought mechanical advantage was the square of the ratio of the lengths, so I calculated 3² = 9.
+My answer: B) 468 N
+Explanation: I calculated the apparent weight as F = mg - ma = 60(9.8 - 2) = 60 × 7.8 = 468 N, thinking the acceleration reduces the reading.
