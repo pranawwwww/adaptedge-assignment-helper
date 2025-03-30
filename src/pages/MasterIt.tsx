@@ -155,8 +155,37 @@ const MasterIt = () => {
           setShowAnswer(false);
           setAnsweredQuestions({});
           setProgressState('reading');
-        } else {
-          // For higher levels, we need the questionnaire from the previous level
+        } 
+        // Special handling for level 6 (Final Review)
+        else if (levelIdNumber === 6) {
+          // Check for answers document in session storage
+          const storedAnswersDoc = sessionStorage.getItem('answersDocument');
+          if (!storedAnswersDoc) {
+            toast({
+              title: "No assignment submission found",
+              description: "Please complete Level 5 and submit your assignment first.",
+              variant: "destructive"
+            });
+            // Redirect to level 5
+            navigate('/master-it/5');
+            return;
+          }
+          
+          // Parse the answers document
+          const answersDocument = JSON.parse(storedAnswersDoc);
+          console.log("Found answers document for evaluation:", answersDocument.name);
+          
+          // Fetch level 6 content with the answers document
+          // We won't pass questionnaire data for level 6 as we want the evaluation to focus on the submitted assignment
+          const levelData = await fetchLevelContent(levelIdNumber, uploadedFiles);
+          
+          setCurrentLevel(levelData);
+          
+          // For level 6, always set to reading state
+          setProgressState('reading');
+        }
+        else {
+          // For higher levels (except 6), we need the questionnaire from the previous level
           const levelData = await fetchLevelContent(
             levelIdNumber,
             uploadedFiles,
@@ -200,7 +229,7 @@ const MasterIt = () => {
     };
 
     fetchCurrentLevel();
-  }, [levelId, toast]);
+  }, [levelId, toast, navigate]);
 
   // Set up refs for flashcards and questions when current level changes
   useEffect(() => {
@@ -327,11 +356,21 @@ const MasterIt = () => {
 
   // Move from reading to flashcards section
   const handleContinueToFlashcards = () => {
-    setProgressState('flashcards');
-    // Scroll to flashcards section with a delay to allow rendering
-    setTimeout(() => {
-      flashcardsHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+    // For Level 5, we want to directly show both flashcards and upload option
+    if (parseInt(levelId) === 5) {
+      setProgressState('completed'); // Set to completed to show both sections
+      // Scroll to flashcards section with a delay to allow rendering
+      setTimeout(() => {
+        flashcardsHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    } else {
+      // For other levels, just show flashcards
+      setProgressState('flashcards');
+      // Scroll to flashcards section with a delay to allow rendering
+      setTimeout(() => {
+        flashcardsHeaderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
   };
 
   // Handle submission of answers to current level
@@ -525,8 +564,8 @@ const MasterIt = () => {
             {/* API Key Warning */}
             <ApiKeyWarning />
             
-            {/* Feedback Section - Only shown if there is feedback */}
-            {currentLevel.feedback_md && (
+            {/* Feedback Section - Only shown if there is feedback and not level 6 */}
+            {currentLevel.feedback_md && parseInt(levelId) !== 6 && (
               <div className="mb-8">
                 <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
                   <CardHeader className="bg-blue-50 dark:bg-blue-900/30 border-b border-blue-100 dark:border-blue-800">
@@ -572,10 +611,18 @@ const MasterIt = () => {
             {/* Content Section */}
             <div className="mb-8">
               <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
-                <CardHeader className="border-b border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center justify-end">
-                    <div className="text-sm bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full">
-                      Level {levelId}
+                <CardHeader className={`border-b ${parseInt(levelId) === 6 ? "bg-green-50 dark:bg-green-900/30 border-green-100 dark:border-green-800" : "border-gray-100 dark:border-gray-700"}`}>
+                  <div className="flex items-center justify-between">
+                    {parseInt(levelId) === 6 ? (
+                      <h2 className="text-2xl font-bold text-green-700 dark:text-green-300 flex items-center">
+                        <CheckCircle className="mr-2 h-5 w-5" />
+                        Final Assignment Evaluation
+                      </h2>
+                    ) : (
+                      <div></div>
+                    )}
+                    <div className={`text-sm ${parseInt(levelId) === 6 ? "bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200" : "bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200"} px-3 py-1 rounded-full`}>
+                      {parseInt(levelId) === 6 ? "Final Review" : `Level ${levelId}`}
                     </div>
                   </div>
                 </CardHeader>
@@ -611,8 +658,8 @@ const MasterIt = () => {
                     </div>
                   )}
                   
-                  {/* Continue button */}
-                  {!isLoading && progressState === 'reading' && (
+                  {/* Continue button - hide for level 6 */}
+                  {!isLoading && progressState === 'reading' && parseInt(levelId) !== 6 && (
                     <div className="mt-8 flex flex-col items-center">
                       <div className="mb-4 flex gap-2 items-center text-sm text-purple-600 dark:text-purple-400">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m6 9 6 6 6-6"/></svg>
@@ -631,8 +678,8 @@ const MasterIt = () => {
               </Card>
             </div>
 
-            {/* Flashcards Section - Only shown after reading content */}
-            {progressState !== 'reading' && currentLevel.flashcards && currentLevel.flashcards.length > 0 && (
+            {/* Flashcards Section - Only shown after reading content and not level 6 */}
+            {progressState !== 'reading' && parseInt(levelId) !== 6 && currentLevel.flashcards && currentLevel.flashcards.length > 0 && (
               <div className="mb-8">
                 <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
                   <CardHeader className="bg-purple-50 dark:bg-purple-900/30 border-b border-purple-100 dark:border-purple-800">
@@ -696,6 +743,7 @@ const MasterIt = () => {
                                     <Button 
                                       onClick={handleNextFlashcard}
                                       className="flex items-center"
+                                      disabled={parseInt(levelId) === 5 && currentFlashcardIndex === currentLevel.flashcards.length - 1}
                                     >
                                       {currentFlashcardIndex < currentLevel.flashcards.length - 1 ? (
                                         <>
@@ -704,7 +752,11 @@ const MasterIt = () => {
                                         </>
                                       ) : (
                                         <>
-                                          Continue to Questions
+                                          {parseInt(levelId) === 5 ? (
+                                            <span className="text-gray-400">Continue to Questions</span>
+                                          ) : (
+                                            <>Continue to Questions</>
+                                          )}
                                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1"><path d="m6 9 6 6 6-6"/></svg>
                                         </>
                                       )}
@@ -738,8 +790,8 @@ const MasterIt = () => {
               </div>
             )}
 
-            {/* Questions Section - Only shown after flashcards */}
-            {(progressState === 'questions' || progressState === 'completed') && currentLevel.assessment_questions && currentLevel.assessment_questions.length > 0 && (
+            {/* Questions Section - Only shown after flashcards and not level 6 */}
+            {(progressState === 'questions' || progressState === 'completed') && parseInt(levelId) !== 6 && currentLevel.assessment_questions && currentLevel.assessment_questions.length > 0 && (
               <div className="mb-8">
                 <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
                   <CardHeader className="bg-purple-50 dark:bg-purple-900/30 border-b border-purple-100 dark:border-purple-800">
@@ -907,6 +959,39 @@ const MasterIt = () => {
                 </div>
                 
                 <AnswersUpload onUploadComplete={handleAnswersDocumentUpload} />
+              </div>
+            )}
+            
+            {/* Final evaluation information for Level 6 */}
+            {parseInt(levelId) === 6 && (
+              <div className="mb-8">
+                <Card className="bg-blue-50 dark:bg-blue-900/20 shadow-md overflow-hidden">
+                  <CardHeader className="border-b border-blue-100 dark:border-blue-800">
+                    <div className="flex items-center">
+                      <h2 className="text-xl font-bold text-blue-700 dark:text-blue-300 flex items-center">
+                        <CheckCircle className="mr-2 h-5 w-5" />
+                        Evaluation Information
+                      </h2>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4">
+                      Your assignment has been evaluated against the learning objectives and requirements. The final review above provides a comprehensive assessment of your work, including:
+                    </p>
+                    <ul className="list-disc list-inside space-y-2 mb-6 text-gray-600 dark:text-gray-300">
+                      <li>Overall assessment of your assignment</li>
+                      <li>Areas where you demonstrated strong understanding</li>
+                      <li>Concepts that may need further review</li>
+                      <li>Suggestions for improvement</li>
+                      <li>Additional resources to enhance your learning</li>
+                    </ul>
+                    <div className="bg-green-100 dark:bg-green-900/20 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                      <p className="text-green-700 dark:text-green-300 font-medium">
+                        Congratulations on completing the entire learning path! You can return to previous levels at any time to review concepts or continue practicing.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             )}
           </div>
