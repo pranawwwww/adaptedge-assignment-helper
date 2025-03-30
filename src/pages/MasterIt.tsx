@@ -90,16 +90,6 @@ const MarkdownComponents = {
   ),
 };
 
-// Level titles based on status
-const levelTitles: Record<string, string> = {
-  'LEVEL_0_OVERVIEW': 'Assignment Overview',
-  'LEVEL_1_BASIC_UNDERSTANDING': 'Basic Understanding',
-  'LEVEL_2_ADVANCED_UNDERSTANDING': 'Advanced Understanding',
-  'LEVEL_3_PRACTICAL_APPLICATION': 'Practical Application',
-  'LEVEL_4_EXPERT_IMPLEMENTATION': 'Expert Implementation',
-  'LEVEL_5_MASTERY': 'Mastery'
-};
-
 // Progress states for tracking user progress through the content
 type ProgressState = 'reading' | 'flashcards' | 'questions' | 'completed' | 'upload';
 
@@ -251,8 +241,17 @@ const MasterIt = () => {
     if (!currentLevel) return;
     
     if (currentFlashcardIndex < currentLevel.flashcards.length - 1) {
-      setCurrentFlashcardIndex(prev => prev + 1);
+      const nextIndex = currentFlashcardIndex + 1;
+      setCurrentFlashcardIndex(nextIndex);
       setShowAnswer(false);
+      
+      // Scroll to the next flashcard
+      setTimeout(() => {
+        flashcardRefs.current[nextIndex]?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+      }, 100);
     } else {
       // If we've reached the last flashcard, move to questions
       setProgressState('questions');
@@ -477,8 +476,8 @@ const MasterIt = () => {
   // Get the main content - handle both spellings (main_content_md and main_conent_md)
   const mainContent = currentLevel.main_content_md || currentLevel.main_conent_md || '';
   
-  // Get title from status mapping
-  const levelTitle = levelTitles[currentLevel.status] || `Level ${levelId}`;
+  // Get title from available levels
+  const levelTitle = availableLevels.find(level => level.id === parseInt(levelId))?.title || `Level ${levelId}`;
 
   return (
     <SidebarProvider>
@@ -574,8 +573,7 @@ const MasterIt = () => {
             <div className="mb-8">
               <Card className="bg-white dark:bg-gray-800 shadow-md overflow-hidden">
                 <CardHeader className="border-b border-gray-100 dark:border-gray-700">
-                  <div className="flex items-center justify-between">
-                    <h1 className="text-3xl font-bold">{levelTitle}</h1>
+                  <div className="flex items-center justify-end">
                     <div className="text-sm bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full">
                       Level {levelId}
                     </div>
@@ -669,13 +667,11 @@ const MasterIt = () => {
                               <div className="min-h-[180px] flex flex-col">
                                 <div className="flex-1 mb-4">
                                   <h3 className="text-lg font-medium mb-3 text-purple-700 dark:text-purple-300">
-                                    {index === currentFlashcardIndex && showAnswer ? "Answer:" : "Question:"}
+                                    {flashcard.heading}
                                   </h3>
                                   <div className="p-4 bg-purple-50 dark:bg-gray-700 rounded-lg">
                                     <p className="text-lg">
-                                      {index === currentFlashcardIndex && showAnswer 
-                                        ? flashcard.flashcard_content 
-                                        : flashcard.heading}
+                                      {flashcard.flashcard_content}
                                     </p>
                                   </div>
                                 </div>
@@ -687,13 +683,6 @@ const MasterIt = () => {
                                       disabled={currentFlashcardIndex === 0}
                                     >
                                       Previous
-                                    </Button>
-                                    <Button 
-                                      variant="secondary"
-                                      onClick={showAnswer ? () => setShowAnswer(false) : handleShowAnswer}
-                                      className="min-w-24"
-                                    >
-                                      {showAnswer ? 'Hide Answer' : 'Show Answer'}
                                     </Button>
                                     <Button 
                                       onClick={handleNextFlashcard}
