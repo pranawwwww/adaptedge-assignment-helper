@@ -67,7 +67,7 @@ const Index = () => {
             
             <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-purple-100 dark:border-purple-900/30 card-hover">
               <div className="absolute -top-3 left-0 right-0 mx-auto w-max bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                MOST POPULAR
+                TO BE IMPLEMENTED
               </div>
               <CardHeader>
                 <div className="w-16 h-16 bg-pastel-pink rounded-full flex items-center justify-center mx-auto mb-4">
