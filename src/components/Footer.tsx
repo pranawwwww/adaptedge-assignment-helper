@@ -35,7 +35,7 @@ const Footer = () => {
           </div>
           
           <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-            AdaptEdge Assignment Helper - Developed at ASU SURI Hackathon 2023
+            AdaptEdge Assignment Helper
             <br />
             &copy; {new Date().getFullYear()} All Rights Reserved
           </p>
