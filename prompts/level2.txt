@@ -1,0 +1,58 @@
+Level 2: Advanced Concept Understanding Prompt
+
+Here are my answers to the Level 1 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my understanding at this more challenging level
+2. Provide detailed feedback emphasizing nuances I may have missed
+3. Score my progress on a scale of 1-10 with comparison to previous level
+4. Introduce more advanced aspects of the concept including edge cases and optimizations
+5. Create new questions that require deeper analysis and application
+6. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_2_ADVANCED_UNDERSTANDING",
+  
+  "feedback_md": "# Feedback on Level 1 Assessment\n\n## Concept Mastery\nDetailed analysis of your understanding of advanced aspects, highlighting sophisticated connections you've made and complex elements you've grasped.\n\n## Nuanced Understanding\nIdentification of subtle distinctions or special cases that your answers demonstrated awareness of or missed.\n\n## Technical Precision\nFeedback on the accuracy and specificity of your understanding, noting any terminology or implementation details that need refinement.\n\n## Progress Score: [X/10]\nNumerical assessment showing your advancement from the previous level, with specific justification for the score change.\n\n## Readiness Assessment\nEvaluation of your preparedness to move into more complex application of these concepts.",
+  
+  "main_content_md": "# Key Concept 1: Advanced Applications\n\n[Comprehensive markdown explanation including advanced use cases, edge cases, best practices, etc.]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 1 - Edge Cases",
+      "flashcard_content": "Comprehensive catalog of boundary conditions and exceptional situations, with specific handling strategies for each. Include detection methods and recovery approaches."
+    },
+    {
+      "heading": "Key Concept 1 - Advanced Techniques",
+      "flashcard_content": "Detailed explanation of sophisticated implementation methods that improve efficiency, maintainability, or scalability. Include comparative analysis of when each approach is most appropriate."
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_concept1_level2",
+      "concept_focus": "Key Concept 1",
+      "type": "MCQ",
+      "question_text": "Complex question requiring synthesis of multiple aspects of concept 1 in a challenging scenario?",
+      "options": ["Option A with complex reasoning", "Option B with complex reasoning", "Option C with complex reasoning", "Option D with complex reasoning"],
+      "correct_answers": ["Option A"],
+      "explanation": "Thorough analysis of the multi-faceted reasoning required, showing how different aspects of the concept interact in this scenario and why Option A represents the optimal approach."
+    },
+    {
+      "id": "q2_concept1_level2",
+      "concept_focus": "Key Concept 1",
+      "type": "MAQ",
+      "question_text": "Advanced scenario requiring evaluation of multiple implementation strategies. Select all valid approaches.",
+      "options": ["Approach W with trade-offs", "Approach X with trade-offs", "Approach Y with trade-offs", "Approach Z with trade-offs"],
+      "correct_answers": ["Approach W", "Approach X", "Approach Z"],
+      "explanation": "Comparative analysis of each approach's strengths and limitations in this context, explaining why W, X, and Z are valid while Y is problematic or inefficient."
+    }
+    // 1-2 more advanced application questions that test deep understanding
+  ]
+}

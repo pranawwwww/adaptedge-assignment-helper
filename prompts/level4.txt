@@ -1,0 +1,59 @@
+Level 4: Practical Application Prompt
+
+Here are my answers to the Level 3 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my understanding of both concepts and their integration
+2. Provide feedback on my systems thinking and design decisions
+3. Score my progress on a scale of 1-10 with comparison to all previous levels
+4. Provide detailed real-world application scenarios with implementation frameworks
+5. Create practical, scenario-based questions that simulate actual assignment problems
+6. These should be complex enough to prepare me for the final assignment
+7. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_4_PRACTICAL_APPLICATION",
+  
+  "feedback_md": "# Feedback on Level 3 Assessment\n\n## Integration Mastery\nAnalysis of your understanding of how multiple concepts work together in complex systems, highlighting successful connections you've made.\n\n## Systems Thinking\nEvaluation of your ability to consider holistic solutions rather than isolated concept implementations.\n\n## Design Decision Quality\nAssessment of the soundness of your approach selections, with attention to both technical correctness and practical considerations.\n\n## Progress Score: [X/10]\nScore reflecting your ability to work with integrated concepts, with comparison to previous levels.\n\n## Application Readiness\nEvaluation of your preparedness to apply these integrated concepts to realistic, assignment-like scenarios.",
+  
+  "main_content_md": "# Practical Applications and Case Studies\n\n[Comprehensive markdown content with real-world examples, case studies, and practical applications of all concepts]",
+  
+  "flashcards": [
+    {
+      "heading": "Case Study 1",
+      "flashcard_content": "Comprehensive analysis of a realistic application scenario, including initial requirements, approach selection, implementation details, challenges encountered, and resolution strategies. Directly applicable to assignment context."
+    },
+    {
+      "heading": "Problem-Solving Framework",
+      "flashcard_content": "Detailed methodology for approaching complex assignment tasks, from requirements analysis through architecture design, implementation planning, development process, testing strategy, and final verification."
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_application_level4",
+      "concept_focus": "Practical Application",
+      "type": "MCQ",
+      "question_text": "Complex scenario closely resembling an assignment requirement, requiring integration of multiple concepts to solve?",
+      "options": ["Solution A with detailed implementation", "Solution B with detailed implementation", "Solution C with detailed implementation", "Solution D with detailed implementation"],
+      "correct_answers": ["Solution B"],
+      "explanation": "Comprehensive analysis of why Solution B represents the optimal approach for this scenario, considering correctness, efficiency, maintainability, and alignment with assignment requirements."
+    },
+    {
+      "id": "q2_application_level4",
+      "concept_focus": "Practical Application",
+      "type": "MAQ",
+      "question_text": "Assignment-like scenario requiring identification of multiple implementation components. Select all necessary elements.",
+      "options": ["Component W with function", "Component X with function", "Component Y with function", "Component Z with function"],
+      "correct_answers": ["Component W", "Component Y", "Component Z"],
+      "explanation": "Detailed justification for why Components W, Y, and Z are essential to a complete solution, while Component X is either redundant or inappropriate for this context."
+    }
+    // 1-2 more application-focused questions that simulate real assignment challenges
+  ]
+}

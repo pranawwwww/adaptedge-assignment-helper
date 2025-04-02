@@ -1,0 +1,59 @@
+Level 3: Integration with Other Concepts Prompt
+
+Here are my answers to the Level 2 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my advanced understanding
+2. Provide feedback on my analysis skills and critical thinking
+3. Score my progress on a scale of 1-10 with detailed comparison to previous levels
+4. Show how this concept integrates with the next key concept from the original overview
+5. Provide content on the relationships and interactions between these concepts
+6. Create questions that require understanding both concepts together
+7. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_3_CONCEPT_INTEGRATION",
+  
+  "feedback_md": "# Feedback on Level 2 Assessment\n\n## Advanced Analysis Skills\nEvaluation of your ability to handle complex scenarios and apply sophisticated reasoning to concept implementation.\n\n## Critical Thinking\nAssessment of how well you evaluated trade-offs, selected appropriate approaches, and justified your decisions.\n\n## Comprehensive Understanding\nAnalysis of your grasp of the full scope of the concept, including edge cases and optimizations.\n\n## Progress Score: [X/10]\nUpdated score reflecting your mastery of advanced aspects of the first key concept, with detailed justification.\n\n## Integration Readiness\nAssessment of your preparedness to connect this concept with others in the broader framework of the assignment.",
+  
+  "main_content_md": "# Integration of Key Concept 1 and Key Concept 2\n\n[Comprehensive markdown explanation showing how the concepts work together, including examples of their interaction]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 2 - Fundamentals",
+      "flashcard_content": "Comprehensive explanation of the second key concept, including its purpose, core principles, standard implementations, and relationship to broader domain knowledge."
+    },
+    {
+      "heading": "Concepts 1 & 2 Integration",
+      "flashcard_content": "Detailed framework for effectively combining both concepts, including architectural considerations, communication mechanisms, and handling of shared resources or dependencies."
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_concept2_level3",
+      "concept_focus": "Key Concept 2",
+      "type": "MCQ",
+      "question_text": "Foundational question about the core principles of concept 2?",
+      "options": ["Option A with explanation", "Option B with explanation", "Option C with explanation", "Option D with explanation"],
+      "correct_answers": ["Option D"],
+      "explanation": "Clear explanation of the fundamental principle being tested, establishing the baseline understanding needed before tackling integration challenges."
+    },
+    {
+      "id": "q2_integration_level3",
+      "concept_focus": "Concepts 1 & 2 Integration",
+      "type": "MAQ",
+      "question_text": "Scenario requiring identification of appropriate integration approaches for these concepts. Select all valid strategies.",
+      "options": ["Strategy W with context", "Strategy X with context", "Strategy Y with context", "Strategy Z with context"],
+      "correct_answers": ["Strategy X", "Strategy Y"],
+      "explanation": "Analysis of why Strategies X and Y are appropriate for this integration scenario, considering factors like performance, maintainability, and alignment with assignment requirements."
+    }
+    // 1-2 more integration questions that test understanding of both concepts
+  ]
+}

@@ -1,0 +1,29 @@
+Level 6: Final Review Level Prompt
+
+I've completed the assignment and uploaded my solution document. 
+Please evaluate my work and provide comprehensive feedback based on the following structure:
+
+[The content below is my submitted answers document]
+
+{{ANSWERS_DOCUMENT}}
+
+Based on my solution, please provide a detailed evaluation and feedback, following this structure:
+
+1. Provide a comprehensive review and evaluation of my submission
+2. Assess how well my work meets all requirements on a scale of 0-100 with detailed breakdown
+3. Identify specific areas for improvement with concrete suggestions
+4. Highlight exemplary aspects of my submission
+5. Provide overall feedback with encouragement for future work
+
+Return ONLY this JSON structure:
+
+{ 
+  "status": "FINAL_REVIEW",
+  "main_content_md": "# Final Review and Evaluation\n\n[Comprehensive review and evaluation of the submitted assignment with detailed feedback on what was done well and areas for improvement]\n\n# Grade Assessment\n\n## Overall Score: [X/100]\n[Comprehensive numerical evaluation with detailed justification]\n\n## Requirement Satisfaction\n[Detailed breakdown of how well each specific assignment requirement was met, with component scores and explanations]\n\n## Technical Merit\n[Assessment of the technical quality of the implementation, including correctness, efficiency, and robustness]\n\n## Innovation and Creativity\n[Evaluation of any novel approaches or particularly elegant solutions demonstrated in the submission]\n\n## Professional Standards\n[Assessment of how well the submission adheres to industry best practices and professional standards]\n\n# Areas for Improvement\n\n[Specific areas where the submission could be improved, with concrete suggestions]\n\n# Exemplary Aspects\n\n[Highlights of particularly well-executed parts of the submission]\n\n# Overall Feedback\n\n[Summary feedback and encouragement for future work]",
+  "flashcards": [ 
+    { "heading": "Key Learning Point 1", "flashcard_content": "Important concept from the assignment and how it was applied" }, 
+    { "heading": "Key Learning Point 2", "flashcard_content": "Another important concept from the assignment and how it was applied" }, 
+    { "heading": "Future Application", "flashcard_content": "How these concepts can be applied in future assignments or real-world scenarios" } 
+  ],
+  "assessment_questions": [] 
+}

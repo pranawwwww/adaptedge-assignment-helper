@@ -1,0 +1,46 @@
+Level 5: Final Review & Assessment Prompt
+
+Here are my answers to the Level 4 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Provide final feedback on my overall understanding and application skills
+2. Calculate my final progress score on a scale of 1-10 with detailed justification
+3. Create a comprehensive review of all concepts covered
+4. Include a complete practice assignment that closely mimics the actual assignment
+5. Provide detailed solutions and explanations for the practice assignment
+6. Include a checklist to ensure I've addressed all requirements
+
+Return ONLY this JSON structure:
+
+{
+  "status": "FINAL_REVIEW",
+  
+  "feedback_md": "# Final Assessment Feedback\n\n## Comprehensive Skill Assessment\nDetailed evaluation of your ability to apply all concepts to realistic scenarios, highlighting strengths and remaining areas for growth.\n\n## Solution Design Quality\nAssessment of your approach to complex, integrated problems and the effectiveness of your proposed implementations.\n\n## Assignment Readiness\nEvaluation of your preparation level for successfully completing the actual assignment.\n\n## Final Progress Score: [X/10]\nComprehensive score reflecting your overall mastery of all concepts and readiness for the assignment.\n\n## Learning Journey Analysis\nReview of your progress through all levels, showing growth in understanding and application abilities.",
+  
+  "main_content_md": "# Comprehensive Review\n\n[Complete review of all concepts, their integration, and practical applications, structured as a study guide for the assignment]",
+  
+  "practice_assignment_md": "# Practice Assignment\n\n[A complete practice assignment that closely mirrors the actual assignment requirements]",
+  
+  "solution_md": "# Practice Assignment Solution\n\n[Detailed solution to the practice assignment with explanations of the approach and concepts applied]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 1 - Complete Summary",
+      "flashcard_content": "Comprehensive summary of all important aspects of the first concept, organized for quick reference during assignment completion. Includes core principles, implementation strategies, integration approaches, and common pitfalls to avoid."
+    },
+    {
+      "heading": "Key Concept 2 - Complete Summary",
+      "flashcard_content": "Comprehensive summary of all important aspects of the second concept, with similar structure and depth to the first concept summary."
+    },
+    {
+      "heading": "Integration Framework",
+      "flashcard_content": "Complete methodology for combining all concepts into a cohesive solution, with architecture patterns, communication mechanisms, shared resource management, and consistency preservation techniques."
+    }
+    // Additional summary flashcards as needed
+  ],
+  
+  "assessment_questions": []
+}

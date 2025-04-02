@@ -1,0 +1,59 @@
+Level 1: Feedback & Progressive Learning Prompt
+
+Here are my answers to the Level 0 assessment questions:
+
+[Paste the assessment_questions array with added "user_answers" field for each question]
+
+Based on my answers, please:
+
+1. Evaluate my understanding with specific strengths and areas for growth
+2. Provide detailed feedback on what I got right and wrong
+3. Score my progress on a scale of 1-10 with justification
+4. Explain the correct answers with references to the key concept
+5. Provide more in-depth content about the concept I'm learning
+6. Create new, slightly more challenging questions
+7. Only use MCQ and MAQ type questions
+
+Return ONLY this JSON structure:
+
+{
+  "status": "LEVEL_1_FEEDBACK_AND_PROGRESSION",
+  
+  "feedback_md": "# Feedback on Level 0 Assessment\n\n## Strengths\nDetailed analysis of what you demonstrated strong understanding of, with specific references to your correct answers and the concepts they relate to.\n\n## Areas for Growth\nConstructive identification of concepts that need further development, based on incorrect answers. Focus on the conceptual misunderstandings rather than just the wrong answers.\n\n## Key Insights\nExplanation of the fundamental principles you may have missed and how they connect to the broader learning objectives.\n\n## Progress Score: [X/10]\nNumerical assessment of your current understanding with justification for the score.\n\n## Next Steps\nClear guidance on what to focus on as you move to more advanced material.",
+  
+  "main_content_md": "# Key Concept 1: Deeper Exploration\n\n[More detailed markdown explanation of the concept, including examples, applications, etc.]",
+  
+  "flashcards": [
+    {
+      "heading": "Key Concept 1 - Advanced Aspect",
+      "flashcard_content": "Detailed exploration of a more complex element of the first concept, including edge cases, optimization strategies, and implementation considerations. Include code snippets or formulas if relevant."
+    },
+    {
+      "heading": "Key Concept 1 - Application",
+      "flashcard_content": "Comprehensive example demonstrating how to apply the concept in a realistic scenario similar to the assignment. Include step-by-step reasoning and decision points."
+    }
+    // Additional flashcards as needed
+  ],
+  
+  "assessment_questions": [
+    {
+      "id": "q1_concept1_level1",
+      "concept_focus": "Key Concept 1",
+      "type": "MCQ",
+      "question_text": "More challenging question requiring application of concept 1 in a novel situation?",
+      "options": ["Option A with detailed context", "Option B with detailed context", "Option C with detailed context", "Option D with detailed context"],
+      "correct_answers": ["Option C"],
+      "explanation": "Comprehensive explanation of the reasoning process needed to arrive at Option C, highlighting the key decision points and application of concept principles."
+    },
+    {
+      "id": "q2_concept1_level1",
+      "concept_focus": "Key Concept 1",
+      "type": "MAQ",
+      "question_text": "Another challenging question about concept 1? Select all that apply.",
+      "options": ["Option W with detailed implication", "Option X with detailed implication", "Option Y with detailed implication", "Option Z with detailed implication"],
+      "correct_answers": ["Option X", "Option Z"],
+      "explanation": "Analysis of how the scenario connects to different aspects of the concept, explaining why Options X and Z apply while Options W and Y don't in this context."
+    }
+    // 1-2 more challenging questions focusing on deeper aspects of concept 1
+  ]
+}
