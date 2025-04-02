@@ -4,15 +4,12 @@ import { LevelData } from './masterLevelService';
 // import { fileToBase64 } from './fileUploadService';
 
 // --- Security Warning ---
-// Exposing API keys client-side (via import.meta.env) is insecure!
-// Consider moving API calls to a backend server or cloud function.
-// If client-side is unavoidable, restrict the key tightly in Google Cloud.
+// API key is fetched from either GitHub environment variables or local .env file
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 
 // --- Configuration ---
-// Use gemini-pro-vision for multimodal input (text + files like PDF/images)
-const API_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models/'; // Using v1beta often needed for latest vision features
-const MODEL_NAME = 'gemini-1.5-flash-latest'; // Or 'gemini-pro-vision' or 'gemini-1.5-pro-latest'
+const API_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models/';
+const MODEL_NAME = 'gemini-1.5-flash-latest';
 const API_URL = `${API_BASE_URL}${MODEL_NAME}:generateContent`;
 
 
@@ -77,7 +74,8 @@ export async function fetchPrompt(level: number): Promise<string> {
     console.error(`Invalid level requested: ${level}`);
     throw new Error(`Invalid level: ${level}. Must be between 0 and 6.`);
   }
-  const promptPath = `/prompts/level${level}.txt`;
+  const baseUrl = import.meta.env.BASE_URL || '/';
+  const promptPath = `${baseUrl}prompts/level${level}.txt`;
   try {
     const response = await fetch(promptPath);
     if (!response.ok) {
