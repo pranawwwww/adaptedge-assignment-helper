@@ -33,11 +33,13 @@ function AnimatedRoutes() {
   return <PageTransition key={location.pathname}>{currentOutlet}</PageTransition>;
 }
 
+// Get the base URL from Vite's environment variable
+const baseUrl = import.meta.env.BASE_URL;
+
 const App = () => (
   <ThemeProvider defaultTheme="system" storageKey="adaptedge-theme">
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        {/* Toast notifications */}
         <Toaster />
         <Sonner 
           position="top-right" 
@@ -48,8 +50,7 @@ const App = () => (
           }}
         />
         
-        {/* Main app routing */}
-        <BrowserRouter>
+        <BrowserRouter basename={baseUrl}>
           <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 dark:from-gray-900 dark:to-purple-950 flex flex-col">
             <Routes>
               <Route element={<AnimatedRoutes />}>
