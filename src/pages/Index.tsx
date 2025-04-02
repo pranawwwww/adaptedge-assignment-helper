@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, BookOpen, Brain, Lightbulb, Award, Sparkles, Upload, FileCheck } from "lucide-react";
@@ -15,7 +14,7 @@ const Index = () => {
       <div className="container mx-auto py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="animate-float mb-8">
-            <Brain className="h-20 w-20 text-primary mx-auto" />
+            <Brain className="h-20 w-20 text-primary mx-auto dark-icon" />
           </div>
           
           <h1 className="text-5xl font-bold tracking-tight mb-6 gradient-text animate-fade-in">
@@ -33,14 +32,17 @@ const Index = () => {
             onClick={() => navigate("/upload")}
           >
             Get Started Now
-            <ArrowRight className="ml-2 h-5 w-5" />
+            <ArrowRight className="ml-2 h-5 w-5 dark-icon" />
           </Button>
           
           <div className="grid md:grid-cols-3 gap-6 mt-20">
             <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-purple-100 dark:border-purple-900/30 card-hover">
+              <div className="absolute -top-3 left-0 right-0 mx-auto w-max bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                TO BE IMPLEMENTED
+              </div>
               <CardHeader>
                 <div className="w-16 h-16 bg-pastel-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Brain className="h-8 w-8 text-blue-600" />
+                  <Brain className="h-8 w-8 text-blue-600 dark-icon" />
                 </div>
                 <CardTitle>Quick Start</CardTitle>
                 <CardDescription>
@@ -63,13 +65,13 @@ const Index = () => {
               </CardFooter>
             </Card>
             
-            <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-purple-100 dark:border-purple-900/30 card-hover translate-y-4">
+            <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-purple-100 dark:border-purple-900/30 card-hover">
               <div className="absolute -top-3 left-0 right-0 mx-auto w-max bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                 MOST POPULAR
               </div>
               <CardHeader>
                 <div className="w-16 h-16 bg-pastel-pink rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Lightbulb className="h-8 w-8 text-pink-600" />
+                  <Lightbulb className="h-8 w-8 text-pink-600 dark-icon" />
                 </div>
                 <CardTitle>Learn Fast</CardTitle>
                 <CardDescription>
@@ -93,9 +95,12 @@ const Index = () => {
             </Card>
             
             <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-purple-100 dark:border-purple-900/30 card-hover">
+              <div className="absolute -top-3 left-0 right-0 mx-auto w-max bg-gradient-to-r from-green-500 to-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+                ADVANCED LEARNING
+              </div>
               <CardHeader>
                 <div className="w-16 h-16 bg-pastel-green rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Award className="h-8 w-8 text-green-600" />
+                  <Award className="h-8 w-8 text-green-600 dark-icon" />
                 </div>
                 <CardTitle>Master It</CardTitle>
                 <CardDescription>
@@ -124,7 +129,7 @@ const Index = () => {
             <div className="flex flex-col md:flex-row justify-between gap-8">
               <div className="flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-pastel-lavender flex items-center justify-center mb-3">
-                  <Upload className="h-6 w-6 text-purple-600" />
+                  <Upload className="h-6 w-6 text-purple-600 dark-icon" />
                 </div>
                 <h3 className="font-medium mb-2">Upload Materials</h3>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
@@ -136,7 +141,7 @@ const Index = () => {
               
               <div className="flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-pastel-blue flex items-center justify-center mb-3">
-                  <Sparkles className="h-6 w-6 text-blue-600" />
+                  <Sparkles className="h-6 w-6 text-blue-600 dark-icon" />
                 </div>
                 <h3 className="font-medium mb-2">Learn & Practice</h3>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
@@ -148,7 +153,7 @@ const Index = () => {
               
               <div className="flex flex-col items-center">
                 <div className="w-16 h-16 rounded-full bg-pastel-green flex items-center justify-center mb-3">
-                  <FileCheck className="h-6 w-6 text-green-600" />
+                  <FileCheck className="h-6 w-6 text-green-600 dark-icon" />
                 </div>
                 <h3 className="font-medium mb-2">Get Feedback</h3>
                 <p className="text-sm text-center text-gray-500 dark:text-gray-400">
@@ -165,7 +170,7 @@ const Index = () => {
               onClick={() => navigate("/upload")}
             >
               Start Learning Now
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-5 w-5 dark-icon" />
             </Button>
           </div>
         </div>
