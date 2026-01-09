@@ -39,8 +39,8 @@ export interface LLMContentResponse {
   type: string;
 }
 
-// Import Gemini API service
-import { callGeminiAPI } from './geminiService';
+// Import OpenAI API service (switched from Gemini)
+import { callOpenAI } from './openaiService';
 import { create } from 'zustand';
 
 // Create a store for the loading state to track API calls throughout the app
@@ -123,23 +123,23 @@ export const fetchLevelContent = async (
       }
     }
     
-    console.log('Calling Gemini API with:');
+    console.log('Calling OpenAI API with:');
     console.log(`- Level: ${level}`);
     console.log(`- Files: ${filesForRequest ? Object.keys(filesForRequest).length : 0} items`);
     console.log(`- Questionnaire: ${questionnaire ? 'Yes' : 'No'}`);
     console.log(`- Answers document: ${answersDocument ? 'Yes' : 'No'}`);
-    
-    // Use our Gemini API service to get content
+
+    // Use our OpenAI API service to get content
     try {
-      const result = await callGeminiAPI(level, filesForRequest || {}, questionnaire, answersDocument);
-      console.log('Successfully received Gemini API response');
+      const result = await callOpenAI(level, filesForRequest || {}, questionnaire, answersDocument);
+      console.log('Successfully received OpenAI API response');
       console.log(`- Flashcards: ${result.flashcards.length}`);
       console.log(`- Questions: ${result.assessment_questions.length}`);
       console.log(`- Main content length: ${result.main_content_md?.length || 0} chars`);
       return result;
     } catch (error: any) {
-      console.error('Error from Gemini API:', error.message);
-      throw new Error(`Failed to get content from Gemini: ${error.message}`);
+      console.error('Error from OpenAI API:', error.message);
+      throw new Error(`Failed to get content from OpenAI: ${error.message}`);
     }
   } catch (error) {
     console.error('Error fetching level content:', error);

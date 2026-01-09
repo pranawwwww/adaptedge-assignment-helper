@@ -14,19 +14,21 @@ Based on my answers, please:
 6. Create new, slightly more challenging questions
 7. Only use MCQ and MAQ type questions
 
+IMPORTANT: Return ONLY valid JSON. When including code examples, use markdown code blocks WITHIN the string values like this: "\\n\\n```python\\ncode here\\n```\\n\\n"
+
 Return ONLY this JSON structure:
 
 {
   "status": "LEVEL_1_FEEDBACK_AND_PROGRESSION",
-  
+
   "feedback_md": "# Feedback on Level 0 Assessment\n\n## Strengths\nDetailed analysis of what you demonstrated strong understanding of, with specific references to your correct answers and the concepts they relate to.\n\n## Areas for Growth\nConstructive identification of concepts that need further development, based on incorrect answers. Focus on the conceptual misunderstandings rather than just the wrong answers.\n\n## Key Insights\nExplanation of the fundamental principles you may have missed and how they connect to the broader learning objectives.\n\n## Progress Score: [X/10]\nNumerical assessment of your current understanding with justification for the score.\n\n## Next Steps\nClear guidance on what to focus on as you move to more advanced material.",
-  
-  "main_content_md": "# Key Concept 1: Deeper Exploration\n\n[More detailed markdown explanation of the concept, including examples, applications, etc.]",
-  
+
+  "main_content_md": "# Key Concept 1: Deeper Exploration\n\n[More detailed markdown explanation of the concept, including examples, applications, etc. Use markdown code blocks within the string for code examples: \\n\\n```python\\ncode\\n```\\n\\n]",
+
   "flashcards": [
     {
       "heading": "Key Concept 1 - Advanced Aspect",
-      "flashcard_content": "Detailed exploration of a more complex element of the first concept, including edge cases, optimization strategies, and implementation considerations. Include code snippets or formulas if relevant."
+      "flashcard_content": "Detailed exploration of a more complex element of the first concept, including edge cases, optimization strategies, and implementation considerations. Include code snippets using markdown: \\n\\n```python\\ncode\\n```\\n\\n"
     },
     {
       "heading": "Key Concept 1 - Application",

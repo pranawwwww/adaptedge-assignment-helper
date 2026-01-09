@@ -8,8 +8,8 @@ import { LevelData } from './masterLevelService';
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 
 // --- Configuration ---
-const API_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta/models/';
-const MODEL_NAME = 'gemini-1.5-flash-latest';
+const API_BASE_URL = 'https://generativelanguage.googleapis.com/v1/models/';
+const MODEL_NAME = 'gemini-1.5-flash'; // Using Gemini 1.5 Flash - stable, generous free tier (15 RPM, 1M TPM, 1500 RPD)
 const API_URL = `${API_BASE_URL}${MODEL_NAME}:generateContent`;
 
 
