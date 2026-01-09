@@ -38,7 +38,7 @@ const Index = () => {
           <div className="grid md:grid-cols-3 gap-6 mt-20">
             <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-purple-100 dark:border-purple-900/30 card-hover">
               <div className="absolute -top-3 left-0 right-0 mx-auto w-max bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                TO BE IMPLEMENTED
+                QUICK & SIMPLE
               </div>
               <CardHeader>
                 <div className="w-16 h-16 bg-pastel-blue rounded-full flex items-center justify-center mx-auto mb-4">
@@ -55,8 +55,8 @@ const Index = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   className="w-full text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20"
                   onClick={() => navigate("/upload", { state: { helpType: "quick-start" } })}
                 >
@@ -67,7 +67,7 @@ const Index = () => {
             
             <Card className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm border-purple-100 dark:border-purple-900/30 card-hover">
               <div className="absolute -top-3 left-0 right-0 mx-auto w-max bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-                TO BE IMPLEMENTED
+                GUIDED LEARNING
               </div>
               <CardHeader>
                 <div className="w-16 h-16 bg-pastel-pink rounded-full flex items-center justify-center mx-auto mb-4">
@@ -84,8 +84,8 @@ const Index = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button 
-                  variant="ghost" 
+                <Button
+                  variant="ghost"
                   className="w-full text-pink-600 hover:bg-pink-50 dark:hover:bg-pink-900/20"
                   onClick={() => navigate("/upload", { state: { helpType: "learn-fast" } })}
                 >

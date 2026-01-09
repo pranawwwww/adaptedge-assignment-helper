@@ -150,15 +150,16 @@ const Upload = () => {
         description: "Your materials have been processed successfully.",
       });
       
-      // If this is the Master It learning path, go directly to level 0
+      // Route based on learning path selection
       if (helpType === "master-it") {
         navigate("/master-it/0");
-      }
-      // Otherwise, navigate based on help type
-      else if (helpType) {
-        navigate("/flashcards", { state: { helpType } });
+      } else if (helpType === "quick-start") {
+        navigate("/quick-start");
+      } else if (helpType === "learn-fast") {
+        navigate("/learn-fast");
       } else {
-        navigate("/process");
+        // Default to master-it if no helpType specified
+        navigate("/master-it/0");
       }
     } catch (error) {
       console.error("Error processing files:", error);
